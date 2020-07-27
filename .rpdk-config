@@ -1,0 +1,11 @@
+{
+    "typeName": "SPRT::CrossStack::Executor",
+    "language": "python37",
+    "runtime": "python3.7",
+    "entrypoint": "sprt_crossstack_executor.handlers.resource",
+    "testEntrypoint": "sprt_crossstack_executor.handlers.test_entrypoint",
+    "settings": {
+        "use_docker": true,
+        "protocolVersion": "2.0.0"
+    }
+}

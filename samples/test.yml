@@ -1,0 +1,7 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+# aws cloudformation deploy --template-file samples/test.yml --stack-name test
+
+Resources:
+  Test:
+    Type: SPRT::CrossStack::Executor

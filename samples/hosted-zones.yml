@@ -1,0 +1,45 @@
+AWSTemplateFormatVersion: "2010-09-09"
+Description: >
+  This CloudFormation template creates a hosted zone on a member account
+  and shares its ZoneName with the network account to add it for routing.
+
+
+# https://aws.amazon.com/blogs/security/simplify-dns-management-in-a-multiaccount-environment-with-route-53-resolver/
+
+Resources:
+  CreateHostedZone:
+    Type: SPRT::CrossStack::Executor
+    Properties:
+      AccountId: 123456789012
+      Region: eu-central-1
+      CfnTemplate:
+        AWSTemplateFormatVersion: 2010-09-09
+        Description: Set up HostedZone
+        Resources:
+          HostedZone:
+            Type: AWS::Route53::HostedZone
+            Properties:
+              Name: zone1.example.com
+        Output:
+          NameServers:
+            Value: !GetAtt HostedZone.NameServers
+
+
+  AttachHostedZone:
+    Type: SPRT::CrossStack::Executor
+    Properties:
+      AccountId: 999999999999
+      Region: eu-central-1
+      TemplateParameters:
+      - NameServers: CreateHostedZone1.NameServers
+      CfnTemplate:
+        AWSTemplateFormatVersion: 2010-09-09
+        Description: Set up HostedZone
+        Resources:
+          HostedZone:
+            Type: AWS::Route53::HostedZone
+            Properties:
+              Name: zone1.example.com
+        Output:
+          ZoneNS:
+            Value: !GetAtt HostedZone.NameServers

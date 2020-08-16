@@ -8,7 +8,7 @@ from cloudformation_cli_python_lib import (
     ProgressEvent,
     Resource,
     SessionProxy,
-    exceptions,
+    exceptions
 )
 
 from .models import ResourceHandlerRequest, ResourceModel
@@ -30,9 +30,12 @@ def create_handler(
     model = request.desiredResourceState
     progress: ProgressEvent = ProgressEvent(
         status=OperationStatus.IN_PROGRESS,
-        resourceModel=model,
+        resourceModel=model
     )
     # TODO: put code here
+    print("something")
+    print(model.AccountId)
+    model.ExecutorId = "something"
 
     # Example:
     try:
@@ -52,12 +55,12 @@ def create_handler(
 def update_handler(
     session: Optional[SessionProxy],
     request: ResourceHandlerRequest,
-    callback_context: MutableMapping[str, Any],
+    callback_context: MutableMapping[str, Any]
 ) -> ProgressEvent:
     model = request.desiredResourceState
     progress: ProgressEvent = ProgressEvent(
         status=OperationStatus.IN_PROGRESS,
-        resourceModel=model,
+        resourceModel=model
     )
     # TODO: put code here
     return progress
@@ -67,12 +70,12 @@ def update_handler(
 def delete_handler(
     session: Optional[SessionProxy],
     request: ResourceHandlerRequest,
-    callback_context: MutableMapping[str, Any],
+    callback_context: MutableMapping[str, Any]
 ) -> ProgressEvent:
     model = request.desiredResourceState
     progress: ProgressEvent = ProgressEvent(
         status=OperationStatus.IN_PROGRESS,
-        resourceModel=model,
+        resourceModel=model
     )
     # TODO: put code here
     return progress
@@ -82,13 +85,13 @@ def delete_handler(
 def read_handler(
     session: Optional[SessionProxy],
     request: ResourceHandlerRequest,
-    callback_context: MutableMapping[str, Any],
+    callback_context: MutableMapping[str, Any]
 ) -> ProgressEvent:
     model = request.desiredResourceState
     # TODO: put code here
     return ProgressEvent(
         status=OperationStatus.SUCCESS,
-        resourceModel=model,
+        resourceModel=model
     )
 
 
@@ -96,10 +99,10 @@ def read_handler(
 def list_handler(
     session: Optional[SessionProxy],
     request: ResourceHandlerRequest,
-    callback_context: MutableMapping[str, Any],
+    callback_context: MutableMapping[str, Any]
 ) -> ProgressEvent:
     # TODO: put code here
     return ProgressEvent(
         status=OperationStatus.SUCCESS,
-        resourceModels=[],
+        resourceModels=[]
     )

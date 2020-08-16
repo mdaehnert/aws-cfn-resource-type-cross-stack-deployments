@@ -5,7 +5,7 @@
     "entrypoint": "sprt_crossstack_executor.handlers.resource",
     "testEntrypoint": "sprt_crossstack_executor.handlers.test_entrypoint",
     "settings": {
-        "use_docker": true,
+        "use_docker": false,
         "protocolVersion": "2.0.0"
     }
 }

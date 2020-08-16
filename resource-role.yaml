@@ -8,14 +8,14 @@ Resources:
     Type: AWS::IAM::Role
     Properties:
       MaxSessionDuration: 8400
+      Path: /
       AssumeRolePolicyDocument:
-        Version: '2012-10-17'
+        Version: 2012-10-17
         Statement:
           - Effect: Allow
             Principal:
               Service: resources.cloudformation.amazonaws.com
             Action: sts:AssumeRole
-      Path: "/"
       Policies:
         - PolicyName: ResourceTypePolicy
           PolicyDocument:
@@ -23,11 +23,7 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
-                - "initech:CreateReport"
-                - "initech:DeleteReport"
-                - "initech:DescribeReport"
-                - "initech:ListReports"
-                - "initech:UpdateReport"
+                - "logs:*"
                 Resource: "*"
 Outputs:
   ExecutionRoleArn:

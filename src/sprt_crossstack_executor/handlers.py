@@ -15,6 +15,7 @@ from .models import ResourceHandlerRequest, ResourceModel
 
 # Use this logger to forward log messages to CloudWatch Logs.
 LOG = logging.getLogger(__name__)
+LOG.setLevel(10)
 TYPE_NAME = "SPRT::CrossStack::Executor"
 
 resource = Resource(TYPE_NAME, ResourceModel)
@@ -33,9 +34,8 @@ def create_handler(
         resourceModel=model
     )
     # TODO: put code here
-    print("something")
-    print(model.AccountId)
-    model.ExecutorId = "something"
+    LOG.info("something")
+    LOG.info(model.AccountId)
 
     # Example:
     try:

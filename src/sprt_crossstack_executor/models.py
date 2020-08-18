@@ -40,7 +40,6 @@ class ResourceHandlerRequest(BaseResourceHandlerRequest):
 @dataclass
 class ResourceModel(BaseModel):
     AccountId: Optional[str]
-    ExecutorId: Optional[str]
 
     @classmethod
     def _deserialize(
@@ -53,7 +52,6 @@ class ResourceModel(BaseModel):
         recast_object(cls, json_data, dataclasses)
         return cls(
             AccountId=json_data.get("AccountId"),
-            ExecutorId=json_data.get("ExecutorId"),
         )
 
 

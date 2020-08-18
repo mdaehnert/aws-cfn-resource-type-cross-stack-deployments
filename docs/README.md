@@ -12,8 +12,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 {
     "Type" : "SPRT::CrossStack::Executor",
     "Properties" : {
-        "<a href="#accountid" title="AccountId">AccountId</a>" : <i>String</i>,
-        "<a href="#executorid" title="ExecutorId">ExecutorId</a>" : <i>String</i>
+        "<a href="#accountid" title="AccountId">AccountId</a>" : <i>String</i>
     }
 }
 </pre>
@@ -24,7 +23,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 Type: SPRT::CrossStack::Executor
 Properties:
     <a href="#accountid" title="AccountId">AccountId</a>: <i>String</i>
-    <a href="#executorid" title="ExecutorId">ExecutorId</a>: <i>String</i>
 </pre>
 
 ## Properties
@@ -39,16 +37,8 @@ _Pattern_: <code>[0-9]{12}</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### ExecutorId
-
-_Required_: No
-
-_Type_: String
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
 ## Return Values
 
 ### Ref
 
-When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the ExecutorId.
+When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the AccountId.

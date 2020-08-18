@@ -5,3 +5,5 @@ AWSTemplateFormatVersion: "2010-09-09"
 Resources:
   Test:
     Type: SPRT::CrossStack::Executor
+    Properties:
+      AccountId: 111111111112

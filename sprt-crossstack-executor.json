@@ -7,42 +7,29 @@
     "AccountId": {
       "type": "string",
       "pattern": "[0-9]{12}"
-    },
-    "ExecutorId": {
-      "type": "string"
     }
   },
   "handlers": {
     "create": {
-      "permissions": [
-        "logs:*"
-      ]
+      "permissions": []
     },
     "read": {
-      "permissions": [
-        "logs:*"
-      ]
+      "permissions": []
     },
     "update": {
-      "permissions": [
-        "logs:*"
-      ]
+      "permissions": []
     },
     "delete": {
-      "permissions": [
-        "logs:*"
-      ]
+      "permissions": []
     },
     "list": {
-      "permissions": [
-        "logs:*"
-      ]
+      "permissions": []
     }
   },
   "required": [
     "AccountId"
   ],
   "primaryIdentifier": [
-    "/properties/ExecutorId"
+    "/properties/AccountId"
   ]
 }

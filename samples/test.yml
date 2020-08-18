@@ -9,5 +9,14 @@ Resources:
       AccountId: 123456789012
       Region: eu-central-1
       AssumeRoleName: SomeSubPath/SomeCrossAccessRole
-      CfnTemplate: ...
       LogLevel: 10
+      CfnTemplate:
+        AWSTemplateFormatVersion: 2010-09-09
+        # Some comment
+        Resources:
+          SomeResource:
+            Type: AWS::S3::Bucket
+            Properties:
+              # You need to escape variables.
+              # So that they won't be transformed during execution of SPRT::CrossStack::Executor, but on the CrossStack itself.
+              BucketName: !Sub "Some-bucket-name-${!AWS::AccountId}-${!AWS::Region}"

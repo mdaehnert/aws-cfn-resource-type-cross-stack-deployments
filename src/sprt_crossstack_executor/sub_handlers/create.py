@@ -18,13 +18,13 @@ def handle(
     progress: ProgressEvent
 ):
     model = request.desiredResourceState
-    
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    LOG.error("Entering create.handle() method.")
 
-    LOG.debug("Entering create.handle() method.")
+    LOG.debug(model.CfnTemplate)
+    
 
     model.CrossStackId = str(uuid.uuid4())
-    
+    progress.status = OperationStatus.SUCCESS
     LOG.debug("Exiting create.handle() method.")
 
-    progress.status = OperationStatus.SUCCESS

@@ -40,6 +40,11 @@ class ResourceHandlerRequest(BaseResourceHandlerRequest):
 @dataclass
 class ResourceModel(BaseModel):
     AccountId: Optional[str]
+    Region: Optional[str]
+    AssumeRoleName: Optional[str]
+    CfnTemplate: Optional[MutableMapping[str, Any]]
+    LogLevel: Optional[int]
+    CrossStackId: Optional[str]
 
     @classmethod
     def _deserialize(
@@ -52,6 +57,11 @@ class ResourceModel(BaseModel):
         recast_object(cls, json_data, dataclasses)
         return cls(
             AccountId=json_data.get("AccountId"),
+            Region=json_data.get("Region"),
+            AssumeRoleName=json_data.get("AssumeRoleName"),
+            CfnTemplate=json_data.get("CfnTemplate"),
+            LogLevel=json_data.get("LogLevel"),
+            CrossStackId=json_data.get("CrossStackId"),
         )
 
 

@@ -1,4 +1,5 @@
 import logging
+import uuid
 from typing import Any, MutableMapping, Optional
 
 from cloudformation_cli_python_lib import (
@@ -11,11 +12,13 @@ from cloudformation_cli_python_lib import (
     exceptions
 )
 
+from .sub_handlers import create
+
 from .models import ResourceHandlerRequest, ResourceModel
 
 # Use this logger to forward log messages to CloudWatch Logs.
 LOG = logging.getLogger(__name__)
-LOG.setLevel(10)
+
 TYPE_NAME = "SPRT::CrossStack::Executor"
 
 resource = Resource(TYPE_NAME, ResourceModel)
@@ -33,16 +36,13 @@ def create_handler(
         status=OperationStatus.IN_PROGRESS,
         resourceModel=model
     )
-    # TODO: put code here
-    LOG.info("something")
-    LOG.info(model.AccountId)
 
-    # Example:
+    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    _log_parameters(model)
+
     try:
         if isinstance(session, SessionProxy):
-            client = session.client("s3")
-        # Setting Status to success will signal to cfn that the operation is complete
-        progress.status = OperationStatus.SUCCESS
+            create.handle(session, request, callback_context, progress)
     except TypeError as e:
         # exceptions module lets CloudFormation know the type of failure that occurred
         raise exceptions.InternalFailure(f"was not expecting type {e}")
@@ -62,7 +62,9 @@ def update_handler(
         status=OperationStatus.IN_PROGRESS,
         resourceModel=model
     )
-    # TODO: put code here
+
+    progress.status = OperationStatus.SUCCESS
+
     return progress
 
 
@@ -77,7 +79,9 @@ def delete_handler(
         status=OperationStatus.IN_PROGRESS,
         resourceModel=model
     )
-    # TODO: put code here
+
+    progress.status = OperationStatus.SUCCESS
+
     return progress
 
 
@@ -88,7 +92,7 @@ def read_handler(
     callback_context: MutableMapping[str, Any]
 ) -> ProgressEvent:
     model = request.desiredResourceState
-    # TODO: put code here
+
     return ProgressEvent(
         status=OperationStatus.SUCCESS,
         resourceModel=model
@@ -101,8 +105,18 @@ def list_handler(
     request: ResourceHandlerRequest,
     callback_context: MutableMapping[str, Any]
 ) -> ProgressEvent:
-    # TODO: put code here
+
     return ProgressEvent(
         status=OperationStatus.SUCCESS,
         resourceModels=[]
     )
+
+
+def _log_parameters(model):
+    LOG.debug("Parameters:")
+    LOG.debug("1. AccountId=%s", model.AccountId)
+    LOG.debug("2. Region=%s", model.Region)
+    LOG.debug("3. AssumeRoleName=%s", model.AssumeRoleName)
+    LOG.debug("4. LogLevel=%s", model.LogLevel)
+    LOG.debug("END Parameters")
+    

@@ -12,7 +12,11 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 {
     "Type" : "SPRT::CrossStack::Executor",
     "Properties" : {
-        "<a href="#accountid" title="AccountId">AccountId</a>" : <i>String</i>
+        "<a href="#accountid" title="AccountId">AccountId</a>" : <i>String</i>,
+        "<a href="#region" title="Region">Region</a>" : <i>String</i>,
+        "<a href="#assumerolename" title="AssumeRoleName">AssumeRoleName</a>" : <i>String</i>,
+        "<a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>" : <i>Map</i>,
+        "<a href="#loglevel" title="LogLevel">LogLevel</a>" : <i>Integer</i>,
     }
 }
 </pre>
@@ -23,6 +27,10 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 Type: SPRT::CrossStack::Executor
 Properties:
     <a href="#accountid" title="AccountId">AccountId</a>: <i>String</i>
+    <a href="#region" title="Region">Region</a>: <i>String</i>
+    <a href="#assumerolename" title="AssumeRoleName">AssumeRoleName</a>: <i>String</i>
+    <a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>: <i>Map</i>
+    <a href="#loglevel" title="LogLevel">LogLevel</a>: <i>Integer</i>
 </pre>
 
 ## Properties
@@ -33,7 +41,45 @@ _Required_: Yes
 
 _Type_: String
 
-_Pattern_: <code>[0-9]{12}</code>
+_Pattern_: <code>^[0-9]{12}$</code>
+
+_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
+
+#### Region
+
+_Required_: Yes
+
+_Type_: String
+
+_Pattern_: <code>^[a-z]+-[a-z]-[0-9]+$</code>
+
+_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
+
+#### AssumeRoleName
+
+_Required_: Yes
+
+_Type_: String
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### CfnTemplate
+
+_Required_: Yes
+
+_Type_: Map
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### LogLevel
+
+Set the log level for execution. Can be one of Python's integer log values: https://docs.python.org/3/library/logging.html#logging-levels
+
+_Required_: No
+
+_Type_: Integer
+
+_Allowed Values_: <code>0</code> | <code>10</code> | <code>20</code> | <code>30</code> | <code>40</code> | <code>50</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -41,4 +87,15 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 ### Ref
 
-When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the AccountId.
+When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the CrossStackId.
+
+### Fn::GetAtt
+
+The `Fn::GetAtt` intrinsic function returns a value for a specified attribute of this type. The following are the available attributes and sample return values.
+
+For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::GetAtt](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getatt.html).
+
+#### CrossStackId
+
+Returns the <code>CrossStackId</code> value.
+

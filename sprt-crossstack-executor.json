@@ -1,12 +1,31 @@
 {
   "typeName": "SPRT::CrossStack::Executor",
   "description": "Resource schema for cross-account and cross-region stack deployments.",
-  "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
+  "sourceUrl": "https://github.com/mdaehnert/aws-cfn-resource-type-cross-stack-deployments.git",
   "additionalProperties": false,
   "properties": {
     "AccountId": {
       "type": "string",
-      "pattern": "[0-9]{12}"
+      "pattern": "^[0-9]{12}$"
+    },
+    "Region": {
+      "type": "string",
+      "pattern": "^[a-z]+-[a-z]-[0-9]+$"
+    },
+    "AssumeRoleName": {
+      "type": "string"
+    },
+    "CfnTemplate": {
+      "type": "object"
+    },
+    "LogLevel": {
+      "type": "integer",
+      "description": "Set the log level for execution. Can be one of Python's integer log values: https://docs.python.org/3/library/logging.html#logging-levels",
+      "enum": ["0", "10", "20", "30", "40", "50"],
+      "default": "30"
+    },
+    "CrossStackId": {
+      "type": "string"
     }
   },
   "handlers": {
@@ -26,10 +45,20 @@
       "permissions": []
     }
   },
-  "required": [
-    "AccountId"
-  ],
   "primaryIdentifier": [
-    "/properties/AccountId"
+    "/properties/CrossStackId"
+  ],
+  "required": [
+    "AccountId",
+    "Region",
+    "AssumeRoleName",
+    "CfnTemplate"
+  ],
+  "createOnlyProperties": [
+    "/properties/AccountId",
+    "/properties/Region"
+  ],
+  "readOnlyProperties": [
+    "/properties/CrossStackId"
   ]
 }

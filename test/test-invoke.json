@@ -1,5 +1,7 @@
 {
   "desiredResourceState": {
-    "AccountId": "123456789012"
+    "AccountId": "123456789012",
+    "Region": "eu-central-1",
+    "CfnTemplate": "..."
   }
 }

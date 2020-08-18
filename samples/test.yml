@@ -6,4 +6,8 @@ Resources:
   Test:
     Type: SPRT::CrossStack::Executor
     Properties:
-      AccountId: 111111111112
+      AccountId: 123456789012
+      Region: eu-central-1
+      AssumeRoleName: SomeSubPath/SomeCrossAccessRole
+      CfnTemplate: ...
+      LogLevel: 10

@@ -41,10 +41,14 @@ class ResourceHandlerRequest(BaseResourceHandlerRequest):
 class ResourceModel(BaseModel):
     AccountId: Optional[str]
     Region: Optional[str]
+    AssumeRolePath: Optional[str]
     AssumeRoleName: Optional[str]
+    CfnStackName: Optional[str]
+    CfnCapabilities: Optional[Sequence[str]]
     CfnTemplate: Optional[MutableMapping[str, Any]]
+    CfnStackId: Optional[str]
+    Tags: Optional[Sequence["_Tag"]]
     LogLevel: Optional[int]
-    CrossStackId: Optional[str]
 
     @classmethod
     def _deserialize(
@@ -58,14 +62,40 @@ class ResourceModel(BaseModel):
         return cls(
             AccountId=json_data.get("AccountId"),
             Region=json_data.get("Region"),
+            AssumeRolePath=json_data.get("AssumeRolePath"),
             AssumeRoleName=json_data.get("AssumeRoleName"),
+            CfnStackName=json_data.get("CfnStackName"),
+            CfnCapabilities=json_data.get("CfnCapabilities"),
             CfnTemplate=json_data.get("CfnTemplate"),
+            CfnStackId=json_data.get("CfnStackId"),
+            Tags=deserialize_list(json_data.get("Tag"), Tag),
             LogLevel=json_data.get("LogLevel"),
-            CrossStackId=json_data.get("CrossStackId"),
         )
 
 
 # work around possible type aliasing issues when variable has same name as a model
 _ResourceModel = ResourceModel
+
+
+@dataclass
+class Tag(BaseModel):
+    Key: Optional[str]
+    Value: Optional[str]
+
+    @classmethod
+    def _deserialize(
+        cls: Type["_Tag"],
+        json_data: Optional[Mapping[str, Any]],
+    ) -> Optional["_Tag"]:
+        if not json_data:
+            return None
+        return cls(
+            Key=json_data.get("Key"),
+            Value=json_data.get("Value"),
+        )
+
+
+# work around possible type aliasing issues when variable has same name as a model
+_Tag = Tag
 
 

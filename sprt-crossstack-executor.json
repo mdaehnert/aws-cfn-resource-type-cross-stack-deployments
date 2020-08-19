@@ -12,37 +12,78 @@
       "type": "string",
       "pattern": "^[a-z]+-[a-z]-[0-9]+$"
     },
+    "AssumeRolePath": {
+      "type": "string",
+      "pattern": "^\/.*\/$"
+    },
     "AssumeRoleName": {
       "type": "string"
     },
+    "CfnStackName": {
+      "type": "string"
+    },
+    "CfnCapabilities": {
+      "type": "array",
+      "description": "Set the capability permissions for execution. Can be left out or contains one or more of the following Capabilities: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateStack.html#API_CreateStack_RequestParameters",
+      "enum": ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM", "CAPABILITY_AUTO_EXPAND"],
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
     "CfnTemplate": {
       "type": "object"
+    },
+    "CfnStackId": {
+      "type": "string"
+    },
+    "Tags": {
+      "type": "array",
+      "uniqueItems": false,
+      "items": {
+        "$ref": "#/definitions/Tag"
+      }
     },
     "LogLevel": {
       "type": "integer",
       "description": "Set the log level for execution. Can be one of Python's integer log values: https://docs.python.org/3/library/logging.html#logging-levels",
       "enum": ["0", "10", "20", "30", "40", "50"],
       "default": "30"
-    },
-    "CrossStackId": {
-      "type": "string"
+    }
+  },
+  "definitions": {
+    "Tag": {
+      "type": "object",
+      "additionalProperties": false,
+      "properties": {
+        "Key": {
+          "type": "string"
+        },
+        "Value": {
+          "type": "string"
+        }
+      },
+      "required": [
+        "Value",
+        "Key"
+      ]
     }
   },
   "handlers": {
     "create": {
-      "permissions": []
+      "permissions": ["sts:AssumeRole"]
     },
     "read": {
-      "permissions": []
+      "permissions": ["sts:AssumeRole"]
     },
     "update": {
-      "permissions": []
+      "permissions": ["sts:AssumeRole"]
     },
     "delete": {
-      "permissions": []
+      "permissions": ["sts:AssumeRole"]
     },
     "list": {
-      "permissions": []
+      "permissions": ["sts:AssumeRole"]
     }
   },
   "primaryIdentifier": [
@@ -52,13 +93,15 @@
     "AccountId",
     "Region",
     "AssumeRoleName",
-    "CfnTemplate"
+    "CfnTemplate",
+    "CfnStackName"
   ],
   "createOnlyProperties": [
     "/properties/AccountId",
-    "/properties/Region"
+    "/properties/Region",
+    "/properties/CfnStackName"
   ],
   "readOnlyProperties": [
-    "/properties/CrossStackId"
+    "/properties/CfnStackId"
   ]
 }

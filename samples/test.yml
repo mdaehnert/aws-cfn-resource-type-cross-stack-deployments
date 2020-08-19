@@ -6,13 +6,20 @@ Resources:
   Test:
     Type: SPRT::CrossStack::Executor
     Properties:
-      AccountId: 123456789012
+      AccountId: 709758045169
       Region: eu-central-1
-      AssumeRoleName: SomeSubPath/SomeCrossAccessRole
+#      AssumeRolePath: /SomeSubPath/
+      AssumeRoleName: sprt-crossstack-execution
       LogLevel: 10
+      CfnCapabilities:
+      - CAPABILITY_NAMED_IAM
+      Tags:
+      - Key: FirstTag
+        Value: FirstValue
+      - Key: SecondTag
+        Value: SecondValue
       CfnTemplate:
         AWSTemplateFormatVersion: 2010-09-09
-        # Some comment
         Resources:
           SomeResource:
             Type: AWS::S3::Bucket

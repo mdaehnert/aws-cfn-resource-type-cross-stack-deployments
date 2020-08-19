@@ -71,7 +71,7 @@
   },
   "handlers": {
     "create": {
-      "permissions": ["sts:AssumeRole"]
+      "permissions": ["*"]
     },
     "read": {
       "permissions": ["sts:AssumeRole"]

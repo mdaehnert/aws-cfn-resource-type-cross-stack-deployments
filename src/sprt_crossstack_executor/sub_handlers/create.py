@@ -1,6 +1,6 @@
 import logging
-import uuid
-from typing import Any, MutableMapping, Optional
+import json
+from typing import Any, MutableMapping
 
 from . import utils
 
@@ -14,7 +14,7 @@ from ..models import ResourceHandlerRequest, ResourceModel
 LOG = logging.getLogger(__name__)
 
 def handle(
-    session: Optional[SessionProxy],
+    session: SessionProxy,
     request: ResourceHandlerRequest,
     callback_context: MutableMapping[str, Any],
     progress: ProgressEvent
@@ -24,7 +24,7 @@ def handle(
     LOG.error("Entering create.handle() method.")
 
     LOG.debug(model.CfnTemplate)
-    cfn_client = utils.get_cross_cfn_client(model, "CreateHandler")
+    cfn_client = utils.get_cross_cfn_client(session, model, "CreateHandler")
     _create_stack(cfn_client, model)
 
     model.StackId = "{}-{}-{}".format(model.CfnStackName, model.AccountId, model.Region)
@@ -39,7 +39,7 @@ def _create_stack(cfn_client, model: ResourceModel):
 
     create_response = cfn_client.create_stack(
         StackName=model.CfnStackName,
-        TemplateBody=model.CfnTemplate,
+        TemplateBody=json.dumps(model.CfnTemplate),
         # Parameters=[
         #     {
         #         'ParameterKey': 'string',

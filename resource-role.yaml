@@ -23,6 +23,7 @@ Resources:
             Statement:
               - Effect: Allow
                 Action:
+                - "*"
                 - "sts:AssumeRole"
                 Resource: "*"
 Outputs:

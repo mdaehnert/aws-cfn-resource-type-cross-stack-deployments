@@ -1,29 +1,30 @@
 import boto3
 from ..models import ResourceModel
+from cloudformation_cli_python_lib import (
+    SessionProxy
+)
 
-sts = boto3.client("sts")
 
 
-def get_cross_cfn_client(model: ResourceModel, session_name):
-    session = _get_cross_session(model, session_name)
+def get_cross_cfn_client(session: SessionProxy, model: ResourceModel, session_name):
+    session = _get_cross_session(session, model, session_name)
     return session.client("cloudformation", region_name=model.Region)
 
 
-def get_cross_cfn_resource(model: ResourceModel, session_name):
-    session = _get_cross_session(model, session_name)
+def get_cross_cfn_resource(session: SessionProxy, model: ResourceModel, session_name):
+    session = _get_cross_session(session, model, session_name)
     return session.resource("cloudformation", region_name=model.Region)
 
 
-def _get_cross_session(model: ResourceModel, session_name):
+def _get_cross_session(session: SessionProxy, model: ResourceModel, session_name):
     """Returns session object for cross-account access.
 
     :return: Can be used to obtain session.client() or session.resource()
     """
-    
     final_role_path  = "/" if model.AssumeRolePath is None else model.AssumeRolePath
     role_arn = "arn:aws:iam::{}:role{}{}".format(model.AccountId, final_role_path, model.AssumeRoleName)
     
-    assumed_role = sts.assume_role(
+    assumed_role = session.client("sts").assume_role(
         RoleArn=role_arn,
         RoleSessionName=session_name
       )

@@ -27,4 +27,7 @@ Resources:
             Properties:
               # You need to escape variables.
               # So that they won't be transformed during execution of SPRT::CrossStack::Executor, but on the CrossStack itself.
-              BucketName: !Sub "Some-bucket-name-${!AWS::AccountId}-${!AWS::Region}"
+              BucketName: "some-bucket-name-123213213"
+              Tags:
+              - Key: somekey
+                Value: somevalue

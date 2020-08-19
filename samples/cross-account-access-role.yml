@@ -31,6 +31,8 @@ Resources:
           - sts:AssumeRole
       ManagedPolicyArns:
       - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
+      # Add additional policies for services your CrossStack templates want to execute (e.g. creating a S3 bucket)
+      - arn:aws:iam::aws:policy/AmazonS3FullAccess
       Policies:
       - PolicyName: sprt-crosstack-additional-policy
         PolicyDocument:

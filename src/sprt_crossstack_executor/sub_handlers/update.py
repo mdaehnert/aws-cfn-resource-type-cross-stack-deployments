@@ -23,22 +23,20 @@ def handle(
 ):
     model = request.desiredResourceState
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    LOG.error("Entering create.handle() method.")
+    LOG.error("Entering update.handle() method.")
     
     cfn_client = utils.get_cross_cfn_client(session, model, "CreateHandler")
-    _create_stack(cfn_client, model)
-
-    model.StackId = "{}-{}-{}".format(model.CfnStackName, model.AccountId, model.Region)
-
+    _update_stack(cfn_client, model)
+    
     progress.status = OperationStatus.SUCCESS
-    LOG.debug("Exiting create.handle() method.")
+    LOG.debug("Exiting update.handle() method.")
 
 
-def _create_stack(cfn_client, model: ResourceModel):
+def _update_stack(cfn_client, model: ResourceModel):
     capabilities = [] if model.CfnCapabilities is None else model.CfnCapabilities
     tags = [] if model.Tags is None else model.Tags
 
-    cfn_client.create_stack(
+    cfn_client.update_stack(
         StackName=model.CfnStackName,
         TemplateBody=json.dumps(model.CfnTemplate),
         # Parameters=[
@@ -55,6 +53,7 @@ def _create_stack(cfn_client, model: ResourceModel):
         # EnableTerminationProtection=True|False
     )
     
-    waiter = cfn_client.get_waiter("stack_create_complete")
+    
+    waiter = cfn_client.get_waiter("stack_update_complete")
     
     waiter.wait(StackName=model.CfnStackName)

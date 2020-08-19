@@ -12,7 +12,13 @@ from cloudformation_cli_python_lib import (
     exceptions
 )
 
-from .sub_handlers import create
+from .sub_handlers import (
+    create,
+    update,
+    delete,
+    read,
+    listcfn
+)
 
 from .models import ResourceHandlerRequest, ResourceModel
 
@@ -63,8 +69,14 @@ def update_handler(
         resourceModel=model
     )
 
-    progress.status = OperationStatus.SUCCESS
+    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    _log_parameters(model)
 
+    try:
+        if isinstance(session, SessionProxy):
+            update.handle(session, request, callback_context, progress)
+    except TypeError as e:
+        raise exceptions.InternalFailure(f"was not expecting type {e}")
     return progress
 
 
@@ -80,8 +92,14 @@ def delete_handler(
         resourceModel=model
     )
 
-    progress.status = OperationStatus.SUCCESS
+    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    _log_parameters(model)
 
+    try:
+        if isinstance(session, SessionProxy):
+            delete.handle(session, request, callback_context, progress)
+    except TypeError as e:
+        raise exceptions.InternalFailure(f"was not expecting type {e}")
     return progress
 
 
@@ -92,11 +110,20 @@ def read_handler(
     callback_context: MutableMapping[str, Any]
 ) -> ProgressEvent:
     model = request.desiredResourceState
-
-    return ProgressEvent(
-        status=OperationStatus.SUCCESS,
+    progress: ProgressEvent = ProgressEvent(
+        status=OperationStatus.IN_PROGRESS,
         resourceModel=model
     )
+
+    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    _log_parameters(model)
+
+    try:
+        if isinstance(session, SessionProxy):
+            read.handle(session, request, callback_context, progress)
+    except TypeError as e:
+        raise exceptions.InternalFailure(f"was not expecting type {e}")
+    return progress
 
 
 @resource.handler(Action.LIST)
@@ -105,11 +132,21 @@ def list_handler(
     request: ResourceHandlerRequest,
     callback_context: MutableMapping[str, Any]
 ) -> ProgressEvent:
-
-    return ProgressEvent(
-        status=OperationStatus.SUCCESS,
-        resourceModels=[]
+    model = request.desiredResourceState
+    progress: ProgressEvent = ProgressEvent(
+        status=OperationStatus.IN_PROGRESS,
+        resourceModel=model
     )
+
+    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    _log_parameters(model)
+
+    try:
+        if isinstance(session, SessionProxy):
+            listcnf.handle(session, request, callback_context, progress)
+    except TypeError as e:
+        raise exceptions.InternalFailure(f"was not expecting type {e}")
+    return progress
 
 
 def _log_parameters(model):

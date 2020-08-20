@@ -25,7 +25,7 @@ def handle(
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
     LOG.error("Entering delete.handle() method.")
     
-    cfn_client = utils.get_cross_cfn_client(session, model, "CreateHandler")
+    cfn_client = utils.get_cross_cfn_client(session, model, "DeleteHandler")
 
     if not callback_context.get("DELETE_STARTED"):
         _add_context_info(cfn_client, callback_context, model)

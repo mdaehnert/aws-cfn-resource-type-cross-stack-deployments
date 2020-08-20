@@ -87,7 +87,7 @@
     }
   },
   "primaryIdentifier": [
-    "/properties/CrossStackId"
+    "/properties/CfnStackId"
   ],
   "required": [
     "AccountId",

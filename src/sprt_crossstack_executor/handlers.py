@@ -40,20 +40,19 @@ def create_handler(
     model = request.desiredResourceState
     progress: ProgressEvent = ProgressEvent(
         status=OperationStatus.IN_PROGRESS,
-        resourceModel=model
+        resourceModel=model,
+        callbackContext=callback_context,
+        callbackDelaySeconds=10
     )
 
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    _log_parameters(model)
+    _log_parameters(model, callback_context)
 
     try:
         if isinstance(session, SessionProxy):
             create.handle(session, request, callback_context, progress)
     except TypeError as e:
-        # exceptions module lets CloudFormation know the type of failure that occurred
         raise exceptions.InternalFailure(f"was not expecting type {e}")
-        # this can also be done by returning a failed progress event
-        # return ProgressEvent.failed(HandlerErrorCode.InternalFailure, f"was not expecting type {e}")
     return progress
 
 
@@ -70,7 +69,7 @@ def update_handler(
     )
 
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    _log_parameters(model)
+    _log_parameters(model, callback_context)
 
     try:
         if isinstance(session, SessionProxy):
@@ -93,7 +92,7 @@ def delete_handler(
     )
 
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    _log_parameters(model)
+    _log_parameters(model, callback_context)
 
     try:
         if isinstance(session, SessionProxy):
@@ -116,7 +115,7 @@ def read_handler(
     )
 
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    _log_parameters(model)
+    _log_parameters(model, callback_context)
 
     try:
         if isinstance(session, SessionProxy):
@@ -139,21 +138,25 @@ def list_handler(
     )
 
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    _log_parameters(model)
+    _log_parameters(model, callback_context)
 
     try:
         if isinstance(session, SessionProxy):
-            listcnf.handle(session, request, callback_context, progress)
+            listcfn.handle(session, request, callback_context, progress)
     except TypeError as e:
         raise exceptions.InternalFailure(f"was not expecting type {e}")
     return progress
 
 
-def _log_parameters(model):
+def _log_parameters(model, callback_context):
     LOG.debug("Parameters:")
+    LOG.debug("0. CallbackContext=%s", callback_context)
     LOG.debug("1. AccountId=%s", model.AccountId)
     LOG.debug("2. Region=%s", model.Region)
-    LOG.debug("3. AssumeRoleName=%s", model.AssumeRoleName)
-    LOG.debug("4. LogLevel=%s", model.LogLevel)
-    LOG.debug("END Parameters")
-    
+    LOG.debug("3. AssumeRolePath=%s", model.AssumeRolePath)
+    LOG.debug("4. AssumeRoleName=%s", model.AssumeRoleName)
+    LOG.debug("5. CfnStackName=%s", model.CfnStackName)
+    LOG.debug("6. CfnCapabilities=%s", model.CfnCapabilities)
+    LOG.debug("7. CfnTemplate=%s", model.CfnTemplate)
+    LOG.debug("8. Tags=%s", model.Tags)
+    LOG.debug("9. LogLevel=%s", model.LogLevel)

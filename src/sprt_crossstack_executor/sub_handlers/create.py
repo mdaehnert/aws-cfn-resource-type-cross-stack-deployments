@@ -22,15 +22,20 @@ def handle(
     progress: ProgressEvent
 ):
     model = request.desiredResourceState
+    
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
     LOG.error("Entering create.handle() method.")
     
     cfn_client = utils.get_cross_cfn_client(session, model, "CreateHandler")
-    _create_stack(cfn_client, model)
+    
+    if not callback_context.get("CREATE_STARTED"):
+        model.CfnStackId = "{}-{}-{}".format(model.CfnStackName, model.AccountId, model.Region)
+        _create_stack(cfn_client, model)
+        callback_context["CREATE_STARTED"] = True
+    
+    if _is_create_complete(cfn_client, model):
+        progress.status = OperationStatus.SUCCESS
 
-    model.StackId = "{}-{}-{}".format(model.CfnStackName, model.AccountId, model.Region)
-
-    progress.status = OperationStatus.SUCCESS
     LOG.debug("Exiting create.handle() method.")
 
 
@@ -55,6 +60,16 @@ def _create_stack(cfn_client, model: ResourceModel):
         # EnableTerminationProtection=True|False
     )
     
-    waiter = cfn_client.get_waiter("stack_create_complete")
     
-    waiter.wait(StackName=model.CfnStackName)
+def _is_create_complete(cfn_client, model: ResourceModel):
+    describe_response = cfn_client.describe_stacks(
+        StackName=model.CfnStackName
+    )
+    
+    stack_status = describe_response["Stacks"][0]["StackStatus"]
+    if stack_status.endswith("_FAILED"):
+        raise Exception("StackStatus={}, StackStatusReason={}".format(stack_status, describe_response["Stacks"][0]("StackStatusReason")))
+    elif stack_status == "CREATE_COMPLETE":
+        return True
+    else:
+        return False

@@ -65,7 +65,9 @@ def update_handler(
     model = request.desiredResourceState
     progress: ProgressEvent = ProgressEvent(
         status=OperationStatus.IN_PROGRESS,
-        resourceModel=model
+        resourceModel=model,
+        callbackContext=callback_context,
+        callbackDelaySeconds=10
     )
 
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
@@ -88,7 +90,9 @@ def delete_handler(
     model = request.desiredResourceState
     progress: ProgressEvent = ProgressEvent(
         status=OperationStatus.IN_PROGRESS,
-        resourceModel=model
+        resourceModel=model,
+        callbackContext=callback_context,
+        callbackDelaySeconds=10
     )
 
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
@@ -111,7 +115,9 @@ def read_handler(
     model = request.desiredResourceState
     progress: ProgressEvent = ProgressEvent(
         status=OperationStatus.IN_PROGRESS,
-        resourceModel=model
+        resourceModel=model,
+        callbackContext=callback_context,
+        callbackDelaySeconds=10
     )
 
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
@@ -134,7 +140,9 @@ def list_handler(
     model = request.desiredResourceState
     progress: ProgressEvent = ProgressEvent(
         status=OperationStatus.IN_PROGRESS,
-        resourceModel=model
+        resourceModel=model,
+        callbackContext=callback_context,
+        callbackDelaySeconds=10
     )
 
     LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)

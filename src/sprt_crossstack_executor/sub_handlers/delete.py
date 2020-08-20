@@ -26,11 +26,28 @@ def handle(
     LOG.error("Entering delete.handle() method.")
     
     cfn_client = utils.get_cross_cfn_client(session, model, "CreateHandler")
-    _delete_stack(cfn_client, model)
 
-    progress.status = OperationStatus.SUCCESS
-    LOG.debug("Exiting delete.handle() method.")
+    if not callback_context.get("DELETE_STARTED"):
+        _add_context_info(cfn_client, callback_context, model)
+        _delete_stack(cfn_client, model)
     
+    if _is_delete_complete(cfn_client, callback_context):
+        progress.status = OperationStatus.SUCCESS
+    
+    LOG.debug("Exiting delete.handle() method.")
+
+
+def _add_context_info(cfn_client, callback_context: MutableMapping[str, Any], model: ResourceModel):
+    """
+        After a stack is deleted, it's only callable via StackId, but no longer via StackName.
+        Therefore we collect the Id before starting to delete it. Used to ask StackStatus later on.
+    """
+    describe_response = cfn_client.describe_stacks(
+        StackName=model.CfnStackName
+    )
+    
+    callback_context["STACK_ID"] = describe_response["Stacks"][0]["StackId"]
+
 
 def _delete_stack(cfn_client, model: ResourceModel):
     cfn_client.delete_stack(
@@ -40,3 +57,17 @@ def _delete_stack(cfn_client, model: ResourceModel):
     waiter = cfn_client.get_waiter("stack_delete_complete")
     
     waiter.wait(StackName=model.CfnStackName)
+
+
+def _is_delete_complete(cfn_client, callback_context: MutableMapping[str, Any]):
+    describe_response = cfn_client.describe_stacks(
+        StackName=callback_context["STACK_ID"]
+    )
+    
+    stack_status = describe_response["Stacks"][0]["StackStatus"]
+    if stack_status.endswith("_FAILED"):
+        raise Exception("StackStatus={}, StackStatusReason={}".format(stack_status, describe_response["Stacks"][0]("StackStatusReason")))
+    elif stack_status == "DELETE_COMPLETE":
+        return True
+    else:
+        return False

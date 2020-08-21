@@ -133,10 +133,6 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 ## Return Values
 
-### Ref
-
-When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the CfnStackId.
-
 ### Fn::GetAtt
 
 The `Fn::GetAtt` intrinsic function returns a value for a specified attribute of this type. The following are the available attributes and sample return values.
@@ -146,4 +142,12 @@ For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::G
 #### CfnStackId
 
 Returns the <code>CfnStackId</code> value.
+
+#### CfnStackOutput1
+
+Returns the <code>CfnStackOutput1</code> value.
+
+#### CfnStackOutput2
+
+Returns the <code>CfnStackOutput2</code> value.
 

@@ -31,6 +31,12 @@
         "type": "string"
       }
     },
+    "CfnStackOutput1": {
+      "type": "string"
+    },
+    "CfnStackOutput2": {
+      "type": "string"
+    },
     "CfnTemplate": {
       "type": "object"
     },
@@ -71,7 +77,7 @@
   },
   "handlers": {
     "create": {
-      "permissions": ["*"]
+      "permissions": ["sts:AssumeRole"]
     },
     "read": {
       "permissions": ["sts:AssumeRole"]
@@ -87,7 +93,13 @@
     }
   },
   "primaryIdentifier": [
-    "/properties/CfnStackId"
+    "/properties/AccountId",
+    "/properties/Region",
+    "/properties/AssumeRolePath",
+    "/properties/AssumeRoleName",
+    "/properties/CfnStackName",
+    "/properties/CfnStackId",
+    "/properties/LogLevel"
   ],
   "required": [
     "AccountId",
@@ -102,6 +114,8 @@
     "/properties/CfnStackName"
   ],
   "readOnlyProperties": [
-    "/properties/CfnStackId"
+    "/properties/CfnStackId",
+    "/properties/CfnStackOutput1",
+    "/properties/CfnStackOutput2"
   ]
 }

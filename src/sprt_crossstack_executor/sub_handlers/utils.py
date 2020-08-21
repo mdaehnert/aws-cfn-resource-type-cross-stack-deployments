@@ -3,7 +3,9 @@ from ..models import ResourceModel
 from cloudformation_cli_python_lib import (
     SessionProxy
 )
+import logging
 
+LOG = logging.getLogger(__name__)
 
 
 def get_cross_cfn_client(session: SessionProxy, model: ResourceModel, session_name):
@@ -21,9 +23,11 @@ def _get_cross_session(session: SessionProxy, model: ResourceModel, session_name
 
     :return: Can be used to obtain session.client() or session.resource()
     """
-    final_role_path  = "/" if model.AssumeRolePath is None else model.AssumeRolePath
-    role_arn = "arn:aws:iam::{}:role{}{}".format(model.AccountId, final_role_path, model.AssumeRoleName)
+    LOG.setLevel(model.LogLevel)
     
+    role_arn = "arn:aws:iam::{}:role{}{}".format(model.AccountId, model.AssumeRolePath, model.AssumeRoleName)
+    
+    LOG.debug("Assuming Cross session role: %s", role_arn)
     assumed_role = session.client("sts").assume_role(
         RoleArn=role_arn,
         RoleSessionName=session_name
@@ -34,5 +38,6 @@ def _get_cross_session(session: SessionProxy, model: ResourceModel, session_name
         aws_secret_access_key=assumed_role["Credentials"]["SecretAccessKey"],
         aws_session_token=assumed_role["Credentials"]["SessionToken"]
     )
+
 
     return session

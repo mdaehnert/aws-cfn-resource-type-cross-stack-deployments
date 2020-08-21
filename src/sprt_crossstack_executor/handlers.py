@@ -45,7 +45,10 @@ def create_handler(
         callbackDelaySeconds=10
     )
 
-    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    model.AssumeRolePath  = "/" if model.AssumeRolePath is None else model.AssumeRolePath
+    model.LogLevel = logging.WARNING if model.LogLevel is None else model.LogLevel
+    
+    LOG.setLevel(model.LogLevel)
     _log_parameters(model, callback_context)
 
     try:
@@ -70,7 +73,10 @@ def update_handler(
         callbackDelaySeconds=10
     )
 
-    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    model.AssumeRolePath  = "/" if model.AssumeRolePath is None else model.AssumeRolePath
+    model.LogLevel = logging.WARNING if model.LogLevel is None else model.LogLevel
+
+    LOG.setLevel(model.LogLevel)
     _log_parameters(model, callback_context)
 
     try:
@@ -87,6 +93,7 @@ def delete_handler(
     request: ResourceHandlerRequest,
     callback_context: MutableMapping[str, Any]
 ) -> ProgressEvent:
+    
     model = request.desiredResourceState
     progress: ProgressEvent = ProgressEvent(
         status=OperationStatus.IN_PROGRESS,
@@ -95,7 +102,7 @@ def delete_handler(
         callbackDelaySeconds=10
     )
 
-    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    LOG.setLevel(model.LogLevel)
     _log_parameters(model, callback_context)
 
     try:
@@ -112,6 +119,9 @@ def read_handler(
     request: ResourceHandlerRequest,
     callback_context: MutableMapping[str, Any]
 ) -> ProgressEvent:
+    
+    LOG.error(request)
+
     model = request.desiredResourceState
     progress: ProgressEvent = ProgressEvent(
         status=OperationStatus.IN_PROGRESS,
@@ -120,7 +130,9 @@ def read_handler(
         callbackDelaySeconds=10
     )
 
-    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    LOG.setLevel(model.LogLevel)
+    LOG.info("Entering read.handle() method.")
+
     _log_parameters(model, callback_context)
 
     try:
@@ -128,6 +140,8 @@ def read_handler(
             read.handle(session, request, callback_context, progress)
     except TypeError as e:
         raise exceptions.InternalFailure(f"was not expecting type {e}")
+
+    LOG.info("Exiting read.handle() method.")
     return progress
 
 
@@ -145,7 +159,7 @@ def list_handler(
         callbackDelaySeconds=10
     )
 
-    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
+    LOG.setLevel(model.LogLevel)
     _log_parameters(model, callback_context)
 
     try:
@@ -156,7 +170,7 @@ def list_handler(
     return progress
 
 
-def _log_parameters(model, callback_context):
+def _log_parameters(model: ResourceModel, callback_context: MutableMapping[str, Any]):
     LOG.debug("Parameters:")
     LOG.debug("0. CallbackContext=%s", callback_context)
     LOG.debug("1. AccountId=%s", model.AccountId)

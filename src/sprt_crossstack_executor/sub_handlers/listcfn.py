@@ -22,10 +22,10 @@ def handle(
     progress: ProgressEvent
 ):
     model = request.desiredResourceState
-    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    LOG.error("Entering list.handle() method.")
+    LOG.setLevel(model.LogLevel)
+    LOG.info("Entering list.handle() method.")
     
     cfn_client = utils.get_cross_cfn_client(session, model, "CreateHandler")
 
     progress.status = OperationStatus.SUCCESS
-    LOG.debug("Exiting list.handle() method.")
+    LOG.info("Exiting list.handle() method.")

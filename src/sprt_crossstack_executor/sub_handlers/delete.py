@@ -1,5 +1,4 @@
 import logging
-import json
 from typing import Any, MutableMapping
 
 from cloudformation_cli_python_lib import (
@@ -22,8 +21,8 @@ def handle(
     progress: ProgressEvent
 ):
     model = request.desiredResourceState
-    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    LOG.error("Entering delete.handle() method.")
+    LOG.setLevel(model.LogLevel)
+    LOG.info("Entering delete.handle() method.")
     
     cfn_client = utils.get_cross_cfn_client(session, model, "DeleteHandler")
 
@@ -34,7 +33,7 @@ def handle(
     if _is_delete_complete(cfn_client, callback_context):
         progress.status = OperationStatus.SUCCESS
     
-    LOG.debug("Exiting delete.handle() method.")
+    LOG.info("Exiting delete.handle() method.")
 
 
 def _add_context_info(cfn_client, callback_context: MutableMapping[str, Any], model: ResourceModel):

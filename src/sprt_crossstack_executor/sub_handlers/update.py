@@ -1,5 +1,4 @@
 import logging
-import json
 from typing import Any, MutableMapping
 
 from cloudformation_cli_python_lib import (
@@ -23,8 +22,8 @@ def handle(
 ):
     model = request.desiredResourceState
     
-    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    LOG.error("Entering update.handle() method.")
+    LOG.setLevel(model.LogLevel)
+    LOG.info("Entering update.handle() method.")
     
     cfn_client = utils.get_cross_cfn_client(session, model, "UpdateHandler")
     
@@ -36,7 +35,7 @@ def handle(
     if _is_update_complete(cfn_client, model):
         progress.status = OperationStatus.SUCCESS
 
-    LOG.debug("Exiting update.handle() method.")
+    LOG.info("Exiting update.handle() method.")
 
 
 def _update_stack(cfn_client, model: ResourceModel):
@@ -45,7 +44,7 @@ def _update_stack(cfn_client, model: ResourceModel):
 
     cfn_client.create_stack(
         StackName=model.CfnStackName,
-        TemplateBody=json.dumps(model.CfnTemplate),
+        TemplateBody=model.CfnTemplate,
         # Parameters=[
         #     {
         #         'ParameterKey': 'string',

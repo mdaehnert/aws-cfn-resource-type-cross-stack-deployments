@@ -1,5 +1,4 @@
 import logging
-import json
 from typing import Any, MutableMapping
 
 from cloudformation_cli_python_lib import (
@@ -23,8 +22,8 @@ def handle(
 ):
     model = request.desiredResourceState
     
-    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    LOG.error("Entering create.handle() method.")
+    LOG.setLevel(model.LogLevel)
+    LOG.info("Entering create.handle() method.")
     
     cfn_client = utils.get_cross_cfn_client(session, model, "CreateHandler")
     
@@ -34,9 +33,10 @@ def handle(
         callback_context["CREATE_STARTED"] = True
     
     if _is_create_complete(cfn_client, model):
+        _set_output_values(cfn_client, model)
         progress.status = OperationStatus.SUCCESS
 
-    LOG.debug("Exiting create.handle() method.")
+    LOG.info("Exiting create.handle() method.")
 
 
 def _create_stack(cfn_client, model: ResourceModel):
@@ -45,7 +45,7 @@ def _create_stack(cfn_client, model: ResourceModel):
 
     cfn_client.create_stack(
         StackName=model.CfnStackName,
-        TemplateBody=json.dumps(model.CfnTemplate),
+        TemplateBody=model.CfnTemplate,
         # Parameters=[
         #     {
         #         'ParameterKey': 'string',
@@ -73,3 +73,18 @@ def _is_create_complete(cfn_client, model: ResourceModel):
         return True
     else:
         return False
+
+
+def _set_output_values(cfn_client, model: ResourceModel):
+    describe_response = cfn_client.describe_stacks(
+        StackName=model.CfnStackName
+    )
+    
+    outputs = describe_response["Stacks"][0]["Outputs"]
+    # Clear from previous executions (Mostly interesting for UPDATE).
+    model.CfnStackOutputs = {}
+
+    index = 1
+    for output in outputs:
+        model.CfnStackOutputs[f"CfnStackOutput{index}"] = output["OutputValue"]
+        index += 1

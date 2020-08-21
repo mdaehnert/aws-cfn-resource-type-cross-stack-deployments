@@ -45,6 +45,8 @@ class ResourceModel(BaseModel):
     AssumeRoleName: Optional[str]
     CfnStackName: Optional[str]
     CfnCapabilities: Optional[Sequence[str]]
+    CfnStackOutput1: Optional[str]
+    CfnStackOutput2: Optional[str]
     CfnTemplate: Optional[MutableMapping[str, Any]]
     CfnStackId: Optional[str]
     Tags: Optional[Sequence["_Tag"]]
@@ -66,6 +68,8 @@ class ResourceModel(BaseModel):
             AssumeRoleName=json_data.get("AssumeRoleName"),
             CfnStackName=json_data.get("CfnStackName"),
             CfnCapabilities=json_data.get("CfnCapabilities"),
+            CfnStackOutput1=json_data.get("CfnStackOutput1"),
+            CfnStackOutput2=json_data.get("CfnStackOutput2"),
             CfnTemplate=json_data.get("CfnTemplate"),
             CfnStackId=json_data.get("CfnStackId"),
             Tags=deserialize_list(json_data.get("Tag"), Tag),

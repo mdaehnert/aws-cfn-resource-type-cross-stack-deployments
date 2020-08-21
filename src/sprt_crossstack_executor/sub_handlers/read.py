@@ -22,10 +22,28 @@ def handle(
     progress: ProgressEvent
 ):
     model = request.desiredResourceState
-    LOG.setLevel(model.LogLevel if model.LogLevel is not None else logging.WARNING)
-    LOG.error("Entering read.handle() method.")
+    LOG.setLevel(model.LogLevel)
     
-    cfn_client = utils.get_cross_cfn_client(session, model, "CreateHandler")
+    cfn_client = utils.get_cross_cfn_client(session, model, "ReadHandler")
+    _set_output_values(cfn_client, model)
+    
 
     progress.status = OperationStatus.SUCCESS
-    LOG.debug("Exiting read.handle() method.")
+
+
+def _set_output_values(cfn_client, model: ResourceModel):
+    describe_response = cfn_client.describe_stacks(
+        StackName=model.CfnStackName
+    )
+    
+    outputs = describe_response["Stacks"][0]["Outputs"]
+    # Clear from previous executions (Mostly interesting for UPDATE).
+    model.CfnStackOutputs = {}
+
+    index = 1
+    for output in outputs:
+        setattr(model, f"CfnStackOutput{index}", output["OutputValue"])
+        index += 1
+        
+    
+    LOG.debug("Following variables were defined %s", model)

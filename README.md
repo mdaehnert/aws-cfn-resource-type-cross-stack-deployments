@@ -260,7 +260,9 @@ A: Only a subset is implemented right now. Nevertheless, it's easy to add additi
 _Q: Why are there only nine predefined Output variables from CrossStack's execution?_  
 A: CloudFormation resource provider doesn't allow for dynamic output variables so far. Therefore these predefined set of variables acts as a workaround.
 
-
+_Q: How is this resource tested?_  
+A: Unfortunately the Python contract tests aren't running as of now (@see github issue [#112](https://github.com/aws-cloudformation/cloudformation-cli-python-plugin/issues/112)).
+Therefore tests were done with the provided example deployment _samples/s3-examples.yml_.
 
 _Q: What does the name SPRT stand for?_  
 A: That's an easy one: _S_uper _P_eculiar _R_esource _T_ype.

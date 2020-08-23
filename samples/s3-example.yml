@@ -1,0 +1,44 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+# aws cloudformation deploy --template-file samples/test.yml --stack-name test
+
+Resources:
+  TestResource:
+    Type: SPRT::CrossStack::Executor
+    Properties:
+      AccountId: 709758045169
+      Region: eu-central-1
+      AssumeRoleName: sprt-crossstack-role
+      LogLevel: 10
+      CfnCapabilities:
+      - CAPABILITY_NAMED_IAM
+      CfnStackName: my-first-test-stack
+      CfnParameters:
+        CreatedByTag: CrossStackExecutor
+      CfnTemplate: |
+        AWSTemplateFormatVersion: 2010-09-09
+        Parameters:
+          CreatedByTag:
+            Type: String
+            
+        Resources:
+          SomeResource:
+            Type: AWS::S3::Bucket
+            Properties:
+              BucketName: !Sub "some-bucket-name-${AWS::AccountId}-${AWS::Region}"
+              Tags:
+              - Key: somekey
+                Value: somevalue
+              - Key: CreatedBy
+                Value: !Ref CreatedByTag
+
+        Outputs:
+          S3BucketArn:
+            Value: !GetAtt SomeResource.Arn
+          AnotherOutput:
+            Value: SomeValue
+  
+Outputs:
+  ExampleOutput:
+    Description: Example output for S3 Bucket ARN from child execution
+    Value: !GetAtt TestResource.CfnStackOutput1

@@ -1,0 +1,45 @@
+# This CloudFormation template needs to be installed on every AWS account where you want to grant your CrossStack Provider access to. 
+AWSTemplateFormatVersion: 2010-09-09
+Description: Create CrossStack assumable role.
+
+Parameters:
+  CrossStackMasterAccountId:
+    Type: String
+    Description: Account ID from where the installation will be triggered.
+    AllowedPattern: \d{12}
+  CrossStackRoleName:
+    Type: String
+    Description: Name for assumable role.
+    Default: sprt-crossstack-role
+    
+
+Resources:
+  CrossStackRole:
+    Type: AWS::IAM::Role
+    Properties:
+      RoleName: !Ref CrossStackRoleName
+      Path: /
+      Description: CrossStack's required policies to install AWS features on it's behalf.
+      MaxSessionDuration: 3600 # 1 hour
+      AssumeRolePolicyDocument:
+        Version: 2012-10-17
+        Statement:
+        - Effect: Allow
+          Principal:
+            AWS: !Ref CrossStackMasterAccountId
+          Action:
+          - sts:AssumeRole
+      ManagedPolicyArns:
+      - arn:aws:iam::aws:policy/AWSCloudFormationFullAccess
+      # Add additional policies for services your CrossStack templates want to execute (e.g. creating a S3 bucket)
+      - arn:aws:iam::aws:policy/AmazonS3FullAccess
+      Policies:
+      - PolicyName: sprt-crosstack-additional-policy
+        PolicyDocument:
+          Version: 2012-10-17
+          Statement:
+          - Effect: Allow
+            Resource: "*"
+            Action:
+            # Your additional rights
+            - s3:*

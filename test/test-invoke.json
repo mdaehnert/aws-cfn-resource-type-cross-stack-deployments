@@ -1,0 +1,17 @@
+{
+  "desiredResourceState": {
+    "AccountId": "123456789012",
+    "Region": "eu-central-1",
+    "CfnTemplate": {
+      "AWSTemplateFormatVersion": "2010-09-09",
+      "Resources": {
+        "SomeResource": {
+          "Type": "AWS::S3::Bucket",
+          "Properties": {
+            "BucketName": "!Sub Some-bucket-name-${!AWS::AccountId}-${!AWS::Region}"
+          }
+        }
+      }
+    }
+  }
+}

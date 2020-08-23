@@ -1,105 +1,127 @@
 {
-    "typeName": "SPRT::CrossStack::Executor",
-    "description": "An example resource schema demonstrating some basic constructs and validation rules.",
-    "sourceUrl": "https://github.com/aws-cloudformation/aws-cloudformation-rpdk.git",
-    "definitions": {
-        "InitechDateFormat": {
-            "$comment": "Use the `definitions` block to provide shared resource property schemas",
-            "type": "string",
-            "format": "date-time"
-        },
-        "Memo": {
-            "type": "object",
-            "properties": {
-                "Heading": {
-                    "type": "string"
-                },
-                "Body": {
-                    "type": "string"
-                }
-            },
-            "additionalProperties": false
-        }
+  "typeName": "SPRT::CrossStack::Executor",
+  "description": "Resource schema for cross-account and cross-region stack deployments.",
+  "sourceUrl": "https://github.com/mdaehnert/aws-cfn-resource-type-cross-stack-deployments.git",
+  "additionalProperties": false,
+  "properties": {
+    "AccountId": {
+      "type": "string",
+      "pattern": "^[0-9]{12}$"
     },
-    "properties": {
-        "TPSCode": {
-            "description": "A TPS Code is automatically generated on creation and assigned as the unique identifier.",
-            "type": "string",
-            "pattern": "^[A-Z]{3,5}[0-9]{8}-[0-9]{4}$"
-        },
-        "Title": {
-            "description": "The title of the TPS report is a mandatory element.",
-            "type": "string",
-            "minLength": 20,
-            "maxLength": 250
-        },
-        "CoverSheetIncluded": {
-            "description": "Required for all TPS Reports submitted after 2/19/1999",
-            "type": "boolean"
-        },
-        "DueDate": {
-            "$ref": "#/definitions/InitechDateFormat"
-        },
-        "ApprovalDate": {
-            "$ref": "#/definitions/InitechDateFormat"
-        },
-        "Memo": {
-            "$ref": "#/definitions/Memo"
-        },
-        "SecondCopyOfMemo": {
-            "description": "In case you didn't get the first one.",
-            "$ref": "#/definitions/Memo"
-        },
-        "TestCode": {
-            "type": "string",
-            "enum": [
-                "NOT_STARTED",
-                "CANCELLED"
-            ]
-        },
-        "Authors": {
-            "type": "array",
-            "items": {
-                "type": "string"
-            }
-        }
+    "Region": {
+      "type": "string",
+      "pattern": "^[a-z]+-[a-z]-[0-9]+$"
     },
-    "additionalProperties": false,
-    "required": [
-        "TestCode",
-        "Title"
-    ],
-    "readOnlyProperties": [
-        "/properties/TPSCode"
-    ],
-    "primaryIdentifier": [
-        "/properties/TPSCode"
-    ],
-    "handlers": {
-        "create": {
-            "permissions": [
-                "initech:CreateReport"
-            ]
-        },
-        "read": {
-            "permissions": [
-                "initech:DescribeReport"
-            ]
-        },
-        "update": {
-            "permissions": [
-                "initech:UpdateReport"
-            ]
-        },
-        "delete": {
-            "permissions": [
-                "initech:DeleteReport"
-            ]
-        },
-        "list": {
-            "permissions": [
-                "initech:ListReports"
-            ]
-        }
+    "AssumeRolePath": {
+      "type": "string",
+      "pattern": "^\/.*\/$"
+    },
+    "AssumeRoleName": {
+      "type": "string"
+    },
+    "CfnStackName": {
+      "type": "string"
+    },
+    "CfnCapabilities": {
+      "type": "array",
+      "description": "Set the capability permissions for execution. Can be left out or contains one or more of the following Capabilities: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateStack.html#API_CreateStack_RequestParameters",
+      "enum": ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM", "CAPABILITY_AUTO_EXPAND"],
+      "uniqueItems": true,
+      "items": {
+        "type": "string"
+      }
+    },
+    "CfnParameters": {
+      "type": "object"
+    },
+    "CfnTemplate": {
+      "type": "object"
+    },
+    "CfnStackId": {
+      "type": "string"
+    },
+    "CfnStackOutput1": {
+      "type": "string"
+    },
+    "CfnStackOutput2": {
+      "type": "string"
+    },
+    "CfnStackOutput3": {
+      "type": "string"
+    },
+    "CfnStackOutput4": {
+      "type": "string"
+    },
+    "CfnStackOutput5": {
+      "type": "string"
+    },
+    "CfnStackOutput6": {
+      "type": "string"
+    },
+    "CfnStackOutput7": {
+      "type": "string"
+    },
+    "CfnStackOutput8": {
+      "type": "string"
+    },
+    "CfnStackOutput9": {
+      "type": "string"
+    },
+    "LogLevel": {
+      "type": "integer",
+      "description": "Set the log level for execution. Can be one of Python's integer log values: https://docs.python.org/3/library/logging.html#logging-levels",
+      "enum": ["0", "10", "20", "30", "40", "50"],
+      "default": "30"
     }
+  },
+  "handlers": {
+    "create": {
+      "permissions": ["sts:AssumeRole"]
+    },
+    "read": {
+      "permissions": ["sts:AssumeRole"]
+    },
+    "update": {
+      "permissions": ["sts:AssumeRole"]
+    },
+    "delete": {
+      "permissions": ["sts:AssumeRole"]
+    },
+    "list": {
+      "permissions": ["sts:AssumeRole"]
+    }
+  },
+  "primaryIdentifier": [
+    "/properties/AccountId",
+    "/properties/Region",
+    "/properties/AssumeRolePath",
+    "/properties/AssumeRoleName",
+    "/properties/CfnStackName",
+    "/properties/CfnStackId",
+    "/properties/LogLevel"
+  ],
+  "required": [
+    "AccountId",
+    "Region",
+    "AssumeRoleName",
+    "CfnTemplate",
+    "CfnStackName"
+  ],
+  "createOnlyProperties": [
+    "/properties/AccountId",
+    "/properties/Region",
+    "/properties/CfnStackName"
+  ],
+  "readOnlyProperties": [
+    "/properties/CfnStackId",
+    "/properties/CfnStackOutput1",
+    "/properties/CfnStackOutput2",
+    "/properties/CfnStackOutput3",
+    "/properties/CfnStackOutput4",
+    "/properties/CfnStackOutput5",
+    "/properties/CfnStackOutput6",
+    "/properties/CfnStackOutput7",
+    "/properties/CfnStackOutput8",
+    "/properties/CfnStackOutput9"
+  ]
 }

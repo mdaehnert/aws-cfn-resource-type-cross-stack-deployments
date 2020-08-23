@@ -39,15 +39,25 @@ class ResourceHandlerRequest(BaseResourceHandlerRequest):
 
 @dataclass
 class ResourceModel(BaseModel):
-    TPSCode: Optional[str]
-    Title: Optional[str]
-    CoverSheetIncluded: Optional[bool]
-    DueDate: Optional[str]
-    ApprovalDate: Optional[str]
-    Memo: Optional["_Memo"]
-    SecondCopyOfMemo: Optional["_Memo"]
-    TestCode: Optional[str]
-    Authors: Optional[Sequence[str]]
+    AccountId: Optional[str]
+    Region: Optional[str]
+    AssumeRolePath: Optional[str]
+    AssumeRoleName: Optional[str]
+    CfnStackName: Optional[str]
+    CfnCapabilities: Optional[Sequence[str]]
+    CfnParameters: Optional[MutableMapping[str, Any]]
+    CfnTemplate: Optional[MutableMapping[str, Any]]
+    CfnStackId: Optional[str]
+    CfnStackOutput1: Optional[str]
+    CfnStackOutput2: Optional[str]
+    CfnStackOutput3: Optional[str]
+    CfnStackOutput4: Optional[str]
+    CfnStackOutput5: Optional[str]
+    CfnStackOutput6: Optional[str]
+    CfnStackOutput7: Optional[str]
+    CfnStackOutput8: Optional[str]
+    CfnStackOutput9: Optional[str]
+    LogLevel: Optional[int]
 
     @classmethod
     def _deserialize(
@@ -59,41 +69,29 @@ class ResourceModel(BaseModel):
         dataclasses = {n: o for n, o in getmembers(sys.modules[__name__]) if isclass(o)}
         recast_object(cls, json_data, dataclasses)
         return cls(
-            TPSCode=json_data.get("TPSCode"),
-            Title=json_data.get("Title"),
-            CoverSheetIncluded=json_data.get("CoverSheetIncluded"),
-            DueDate=json_data.get("DueDate"),
-            ApprovalDate=json_data.get("ApprovalDate"),
-            Memo=Memo._deserialize(json_data.get("Memo")),
-            SecondCopyOfMemo=Memo._deserialize(json_data.get("Memo")),
-            TestCode=json_data.get("TestCode"),
-            Authors=json_data.get("Authors"),
+            AccountId=json_data.get("AccountId"),
+            Region=json_data.get("Region"),
+            AssumeRolePath=json_data.get("AssumeRolePath"),
+            AssumeRoleName=json_data.get("AssumeRoleName"),
+            CfnStackName=json_data.get("CfnStackName"),
+            CfnCapabilities=json_data.get("CfnCapabilities"),
+            CfnParameters=json_data.get("CfnParameters"),
+            CfnTemplate=json_data.get("CfnTemplate"),
+            CfnStackId=json_data.get("CfnStackId"),
+            CfnStackOutput1=json_data.get("CfnStackOutput1"),
+            CfnStackOutput2=json_data.get("CfnStackOutput2"),
+            CfnStackOutput3=json_data.get("CfnStackOutput3"),
+            CfnStackOutput4=json_data.get("CfnStackOutput4"),
+            CfnStackOutput5=json_data.get("CfnStackOutput5"),
+            CfnStackOutput6=json_data.get("CfnStackOutput6"),
+            CfnStackOutput7=json_data.get("CfnStackOutput7"),
+            CfnStackOutput8=json_data.get("CfnStackOutput8"),
+            CfnStackOutput9=json_data.get("CfnStackOutput9"),
+            LogLevel=json_data.get("LogLevel"),
         )
 
 
 # work around possible type aliasing issues when variable has same name as a model
 _ResourceModel = ResourceModel
-
-
-@dataclass
-class Memo(BaseModel):
-    Heading: Optional[str]
-    Body: Optional[str]
-
-    @classmethod
-    def _deserialize(
-        cls: Type["_Memo"],
-        json_data: Optional[Mapping[str, Any]],
-    ) -> Optional["_Memo"]:
-        if not json_data:
-            return None
-        return cls(
-            Heading=json_data.get("Heading"),
-            Body=json_data.get("Body"),
-        )
-
-
-# work around possible type aliasing issues when variable has same name as a model
-_Memo = Memo
 
 

@@ -1,6 +1,6 @@
 # SPRT::CrossStack::Executor
 
-An example resource schema demonstrating some basic constructs and validation rules.
+Resource schema for cross-account and cross-region stack deployments.
 
 ## Syntax
 
@@ -12,14 +12,15 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 {
     "Type" : "SPRT::CrossStack::Executor",
     "Properties" : {
-        "<a href="#title" title="Title">Title</a>" : <i>String</i>,
-        "<a href="#coversheetincluded" title="CoverSheetIncluded">CoverSheetIncluded</a>" : <i>Boolean</i>,
-        "<a href="#duedate" title="DueDate">DueDate</a>" : <i>String</i>,
-        "<a href="#approvaldate" title="ApprovalDate">ApprovalDate</a>" : <i>String</i>,
-        "<a href="#memo" title="Memo">Memo</a>" : <i><a href="memo.md">Memo</a></i>,
-        "<a href="#secondcopyofmemo" title="SecondCopyOfMemo">SecondCopyOfMemo</a>" : <i><a href="memo.md">Memo</a></i>,
-        "<a href="#testcode" title="TestCode">TestCode</a>" : <i>String</i>,
-        "<a href="#authors" title="Authors">Authors</a>" : <i>[ String, ... ]</i>
+        "<a href="#accountid" title="AccountId">AccountId</a>" : <i>String</i>,
+        "<a href="#region" title="Region">Region</a>" : <i>String</i>,
+        "<a href="#assumerolepath" title="AssumeRolePath">AssumeRolePath</a>" : <i>String</i>,
+        "<a href="#assumerolename" title="AssumeRoleName">AssumeRoleName</a>" : <i>String</i>,
+        "<a href="#cfnstackname" title="CfnStackName">CfnStackName</a>" : <i>String</i>,
+        "<a href="#cfncapabilities" title="CfnCapabilities">CfnCapabilities</a>" : <i>[ String, ... ]</i>,
+        "<a href="#cfnparameters" title="CfnParameters">CfnParameters</a>" : <i>Map</i>,
+        "<a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>" : <i>Map</i>,
+        "<a href="#loglevel" title="LogLevel">LogLevel</a>" : <i>Integer</i>
     }
 }
 </pre>
@@ -29,98 +30,107 @@ To declare this entity in your AWS CloudFormation template, use the following sy
 <pre>
 Type: SPRT::CrossStack::Executor
 Properties:
-    <a href="#title" title="Title">Title</a>: <i>String</i>
-    <a href="#coversheetincluded" title="CoverSheetIncluded">CoverSheetIncluded</a>: <i>Boolean</i>
-    <a href="#duedate" title="DueDate">DueDate</a>: <i>String</i>
-    <a href="#approvaldate" title="ApprovalDate">ApprovalDate</a>: <i>String</i>
-    <a href="#memo" title="Memo">Memo</a>: <i><a href="memo.md">Memo</a></i>
-    <a href="#secondcopyofmemo" title="SecondCopyOfMemo">SecondCopyOfMemo</a>: <i><a href="memo.md">Memo</a></i>
-    <a href="#testcode" title="TestCode">TestCode</a>: <i>String</i>
-    <a href="#authors" title="Authors">Authors</a>: <i>
+    <a href="#accountid" title="AccountId">AccountId</a>: <i>String</i>
+    <a href="#region" title="Region">Region</a>: <i>String</i>
+    <a href="#assumerolepath" title="AssumeRolePath">AssumeRolePath</a>: <i>String</i>
+    <a href="#assumerolename" title="AssumeRoleName">AssumeRoleName</a>: <i>String</i>
+    <a href="#cfnstackname" title="CfnStackName">CfnStackName</a>: <i>String</i>
+    <a href="#cfncapabilities" title="CfnCapabilities">CfnCapabilities</a>: <i>
       - String</i>
+    <a href="#cfnparameters" title="CfnParameters">CfnParameters</a>: <i>Map</i>
+    <a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>: <i>Map</i>
+    <a href="#loglevel" title="LogLevel">LogLevel</a>: <i>Integer</i>
 </pre>
 
 ## Properties
 
-#### Title
-
-The title of the TPS report is a mandatory element.
+#### AccountId
 
 _Required_: Yes
 
 _Type_: String
 
-_Minimum_: <code>20</code>
+_Pattern_: <code>^[0-9]{12}$</code>
 
-_Maximum_: <code>250</code>
+_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
 
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### CoverSheetIncluded
-
-Required for all TPS Reports submitted after 2/19/1999
-
-_Required_: No
-
-_Type_: Boolean
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### DueDate
-
-_Required_: No
-
-_Type_: String
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### ApprovalDate
-
-_Required_: No
-
-_Type_: String
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### Memo
-
-_Required_: No
-
-_Type_: <a href="memo.md">Memo</a>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### SecondCopyOfMemo
-
-_Required_: No
-
-_Type_: <a href="memo.md">Memo</a>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
-#### TestCode
+#### Region
 
 _Required_: Yes
 
 _Type_: String
 
-_Allowed Values_: <code>NOT_STARTED</code> | <code>CANCELLED</code>
+_Pattern_: <code>^[a-z]+-[a-z]-[0-9]+$</code>
+
+_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
+
+#### AssumeRolePath
+
+_Required_: No
+
+_Type_: String
+
+_Pattern_: <code>^/.*/$</code>
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### Authors
+#### AssumeRoleName
+
+_Required_: Yes
+
+_Type_: String
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### CfnStackName
+
+_Required_: Yes
+
+_Type_: String
+
+_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
+
+#### CfnCapabilities
+
+Set the capability permissions for execution. Can be left out or contains one or more of the following Capabilities: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateStack.html#API_CreateStack_RequestParameters
 
 _Required_: No
 
 _Type_: List of String
 
+_Allowed Values_: <code>CAPABILITY_IAM</code> | <code>CAPABILITY_NAMED_IAM</code> | <code>CAPABILITY_AUTO_EXPAND</code>
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### CfnParameters
+
+_Required_: No
+
+_Type_: Map
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### CfnTemplate
+
+_Required_: Yes
+
+_Type_: Map
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### LogLevel
+
+Set the log level for execution. Can be one of Python's integer log values: https://docs.python.org/3/library/logging.html#logging-levels
+
+_Required_: No
+
+_Type_: Integer
+
+_Allowed Values_: <code>0</code> | <code>10</code> | <code>20</code> | <code>30</code> | <code>40</code> | <code>50</code>
+
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 ## Return Values
-
-### Ref
-
-When you pass the logical ID of this resource to the intrinsic `Ref` function, Ref returns the TPSCode.
 
 ### Fn::GetAtt
 
@@ -128,7 +138,43 @@ The `Fn::GetAtt` intrinsic function returns a value for a specified attribute of
 
 For more information about using the `Fn::GetAtt` intrinsic function, see [Fn::GetAtt](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/intrinsic-function-reference-getatt.html).
 
-#### TPSCode
+#### CfnStackId
 
-A TPS Code is automatically generated on creation and assigned as the unique identifier.
+Returns the <code>CfnStackId</code> value.
+
+#### CfnStackOutput1
+
+Returns the <code>CfnStackOutput1</code> value.
+
+#### CfnStackOutput2
+
+Returns the <code>CfnStackOutput2</code> value.
+
+#### CfnStackOutput3
+
+Returns the <code>CfnStackOutput3</code> value.
+
+#### CfnStackOutput4
+
+Returns the <code>CfnStackOutput4</code> value.
+
+#### CfnStackOutput5
+
+Returns the <code>CfnStackOutput5</code> value.
+
+#### CfnStackOutput6
+
+Returns the <code>CfnStackOutput6</code> value.
+
+#### CfnStackOutput7
+
+Returns the <code>CfnStackOutput7</code> value.
+
+#### CfnStackOutput8
+
+Returns the <code>CfnStackOutput8</code> value.
+
+#### CfnStackOutput9
+
+Returns the <code>CfnStackOutput9</code> value.
 

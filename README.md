@@ -8,6 +8,7 @@ In comparison to CloudFormation StackSets, it offers the following additional fu
 * Use these Outputs as input for other Resources and configure follow-up Resources accordingly.
 * Start installations of different CloudFormation stacks from one single "master" CloudFormation stack.
 
+**TODO**:
 * Architecture diagram
 * Real-world examples
 
@@ -20,16 +21,16 @@ In comparison to CloudFormation StackSets, it offers the following additional fu
 Type: SPRT::CrossStack::Executor
 Properties:
   AccountId: String
-  Region: String
   AssumeRoleName: String
   AssumeRolePath: String
   CfnCapabilities:
   - Array
-  CfnStackName: String
   CfnParameters:
     Object
+  CfnStackName: String
   CfnTemplate: String
   LogLevel: Number
+  Region: String
 ```
 
 ## Properties
@@ -58,7 +59,6 @@ AssumeRoleName
 > _Update allowed_: Yes
 
 
-
 AssumeRolePath
 
 > Role path to assume for CrossStack's installations in different AWS accounts. 
@@ -70,7 +70,6 @@ AssumeRolePath
 > _Type_: String
 > 
 > _Update allowed_: Yes
-
 
 
 CfnCapabilities:
@@ -88,7 +87,6 @@ CfnCapabilities:
 > _Update allowed_: No
 
 
-
 CfnParameters
 
 > Parameters for CloudFormation stack.
@@ -102,7 +100,6 @@ CfnParameters
 > _Update allowed_: Yes
 
 
-
 CfnStackName
 
 > CloudFormation Stack name for CrossStack's installation.
@@ -114,7 +111,6 @@ CfnStackName
 > _Update allowed_: No
 
 
-
 CfnTemplate
 
 > CloudFormation Stack template for CrossStack's installation.
@@ -124,7 +120,6 @@ CfnTemplate
 > _Type_: String
 > 
 > _Update allowed_: Yes
-
 
 
 LogLevel
@@ -221,18 +216,12 @@ Outputs:
   ExampleOutput:
     Description: Example output for S3 Bucket ARN from child execution
     Value: !GetAtt TestResource.CfnStackOutput1
-
 ```
-
-
-
-
-
-
 
 
 # Development
 
+**TODO**:
 * Developed with -C CFN init python...
 * Locations: samples -> here, ...
 * Deployment steps

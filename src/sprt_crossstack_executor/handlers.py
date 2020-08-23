@@ -180,5 +180,4 @@ def _log_parameters(model: ResourceModel, callback_context: MutableMapping[str, 
     LOG.debug("5. CfnStackName=%s", model.CfnStackName)
     LOG.debug("6. CfnCapabilities=%s", model.CfnCapabilities)
     LOG.debug("7. CfnTemplate=%s", model.CfnTemplate)
-    LOG.debug("8. Tags=%s", model.Tags)
-    LOG.debug("9. LogLevel=%s", model.LogLevel)
+    LOG.debug("8. LogLevel=%s", model.LogLevel)

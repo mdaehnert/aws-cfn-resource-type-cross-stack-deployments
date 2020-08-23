@@ -8,16 +8,10 @@ Resources:
     Properties:
       AccountId: 709758045169
       Region: eu-central-1
-#      AssumeRolePath: /SomeSubPath/
       AssumeRoleName: sprt-crossstack-role
       LogLevel: 10
       CfnCapabilities:
       - CAPABILITY_NAMED_IAM
-      Tags:
-      - Key: FirstTag
-        Value: FirstValue
-      - Key: SecondTag
-        Value: SecondValue
       CfnStackName: my-first-test-stack
       CfnParameters:
         CreatedByTag: CrossStackExecutor
@@ -45,9 +39,6 @@ Resources:
             Value: SomeValue
   
 Outputs:
-  Output1:
+  ExampleOutput:
     Description: Example output for S3 Bucket ARN from child execution
     Value: !GetAtt TestResource.CfnStackOutput1
-  Output2:
-    Description: Example 2
-    Value: !GetAtt TestResource.CfnStackOutput2

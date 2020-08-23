@@ -41,7 +41,6 @@ def handle(
 
 def _create_stack(cfn_client, model: ResourceModel):
     capabilities = [] if model.CfnCapabilities is None else model.CfnCapabilities
-    tags = [] if model.Tags is None else model.Tags
 
     cfn_input_parameters = [] if model.CfnParameters is None else model.CfnParameters
     final_parameters = []
@@ -55,8 +54,7 @@ def _create_stack(cfn_client, model: ResourceModel):
         StackName=model.CfnStackName,
         TemplateBody=model.CfnTemplate,
         Parameters=final_parameters,
-        Capabilities=capabilities,
-        Tags=tags
+        Capabilities=capabilities
     )
     
     

@@ -37,13 +37,14 @@ def _set_output_values(cfn_client, model: ResourceModel):
     )
     
     outputs = describe_response["Stacks"][0]["Outputs"]
-    # Clear from previous executions (Mostly interesting for UPDATE).
-    model.CfnStackOutputs = {}
 
     index = 1
     for output in outputs:
+        if index == 10:
+            raise Exception("Only 9 output variables are created so far.")
+            
         setattr(model, f"CfnStackOutput{index}", output["OutputValue"])
         index += 1
         
     
-    LOG.debug("Following variables were defined %s", model)
+    LOG.debug("Following variables were defined (CfnStackOutput*): %s", model)

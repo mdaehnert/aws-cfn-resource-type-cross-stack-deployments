@@ -45,12 +45,18 @@ class ResourceModel(BaseModel):
     AssumeRoleName: Optional[str]
     CfnStackName: Optional[str]
     CfnCapabilities: Optional[Sequence[str]]
-    CfnStackOutput1: Optional[str]
-    CfnStackOutput2: Optional[str]
     CfnParameters: Optional[MutableMapping[str, Any]]
     CfnTemplate: Optional[MutableMapping[str, Any]]
     CfnStackId: Optional[str]
-    Tags: Optional[Sequence["_Tag"]]
+    CfnStackOutput1: Optional[str]
+    CfnStackOutput2: Optional[str]
+    CfnStackOutput3: Optional[str]
+    CfnStackOutput4: Optional[str]
+    CfnStackOutput5: Optional[str]
+    CfnStackOutput6: Optional[str]
+    CfnStackOutput7: Optional[str]
+    CfnStackOutput8: Optional[str]
+    CfnStackOutput9: Optional[str]
     LogLevel: Optional[int]
 
     @classmethod
@@ -69,39 +75,23 @@ class ResourceModel(BaseModel):
             AssumeRoleName=json_data.get("AssumeRoleName"),
             CfnStackName=json_data.get("CfnStackName"),
             CfnCapabilities=json_data.get("CfnCapabilities"),
-            CfnStackOutput1=json_data.get("CfnStackOutput1"),
-            CfnStackOutput2=json_data.get("CfnStackOutput2"),
             CfnParameters=json_data.get("CfnParameters"),
             CfnTemplate=json_data.get("CfnTemplate"),
             CfnStackId=json_data.get("CfnStackId"),
-            Tags=deserialize_list(json_data.get("Tag"), Tag),
+            CfnStackOutput1=json_data.get("CfnStackOutput1"),
+            CfnStackOutput2=json_data.get("CfnStackOutput2"),
+            CfnStackOutput3=json_data.get("CfnStackOutput3"),
+            CfnStackOutput4=json_data.get("CfnStackOutput4"),
+            CfnStackOutput5=json_data.get("CfnStackOutput5"),
+            CfnStackOutput6=json_data.get("CfnStackOutput6"),
+            CfnStackOutput7=json_data.get("CfnStackOutput7"),
+            CfnStackOutput8=json_data.get("CfnStackOutput8"),
+            CfnStackOutput9=json_data.get("CfnStackOutput9"),
             LogLevel=json_data.get("LogLevel"),
         )
 
 
 # work around possible type aliasing issues when variable has same name as a model
 _ResourceModel = ResourceModel
-
-
-@dataclass
-class Tag(BaseModel):
-    Key: Optional[str]
-    Value: Optional[str]
-
-    @classmethod
-    def _deserialize(
-        cls: Type["_Tag"],
-        json_data: Optional[Mapping[str, Any]],
-    ) -> Optional["_Tag"]:
-        if not json_data:
-            return None
-        return cls(
-            Key=json_data.get("Key"),
-            Value=json_data.get("Value"),
-        )
-
-
-# work around possible type aliasing issues when variable has same name as a model
-_Tag = Tag
 
 

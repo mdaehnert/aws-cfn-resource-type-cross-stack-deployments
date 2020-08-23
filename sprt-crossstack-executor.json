@@ -31,12 +31,6 @@
         "type": "string"
       }
     },
-    "CfnStackOutput1": {
-      "type": "string"
-    },
-    "CfnStackOutput2": {
-      "type": "string"
-    },
     "CfnParameters": {
       "type": "object"
     },
@@ -46,36 +40,38 @@
     "CfnStackId": {
       "type": "string"
     },
-    "Tags": {
-      "type": "array",
-      "uniqueItems": false,
-      "items": {
-        "$ref": "#/definitions/Tag"
-      }
+    "CfnStackOutput1": {
+      "type": "string"
+    },
+    "CfnStackOutput2": {
+      "type": "string"
+    },
+    "CfnStackOutput3": {
+      "type": "string"
+    },
+    "CfnStackOutput4": {
+      "type": "string"
+    },
+    "CfnStackOutput5": {
+      "type": "string"
+    },
+    "CfnStackOutput6": {
+      "type": "string"
+    },
+    "CfnStackOutput7": {
+      "type": "string"
+    },
+    "CfnStackOutput8": {
+      "type": "string"
+    },
+    "CfnStackOutput9": {
+      "type": "string"
     },
     "LogLevel": {
       "type": "integer",
       "description": "Set the log level for execution. Can be one of Python's integer log values: https://docs.python.org/3/library/logging.html#logging-levels",
       "enum": ["0", "10", "20", "30", "40", "50"],
       "default": "30"
-    }
-  },
-  "definitions": {
-    "Tag": {
-      "type": "object",
-      "additionalProperties": false,
-      "properties": {
-        "Key": {
-          "type": "string"
-        },
-        "Value": {
-          "type": "string"
-        }
-      },
-      "required": [
-        "Value",
-        "Key"
-      ]
     }
   },
   "handlers": {
@@ -119,6 +115,13 @@
   "readOnlyProperties": [
     "/properties/CfnStackId",
     "/properties/CfnStackOutput1",
-    "/properties/CfnStackOutput2"
+    "/properties/CfnStackOutput2",
+    "/properties/CfnStackOutput3",
+    "/properties/CfnStackOutput4",
+    "/properties/CfnStackOutput5",
+    "/properties/CfnStackOutput6",
+    "/properties/CfnStackOutput7",
+    "/properties/CfnStackOutput8",
+    "/properties/CfnStackOutput9"
   ]
 }

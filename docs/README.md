@@ -20,7 +20,6 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#cfncapabilities" title="CfnCapabilities">CfnCapabilities</a>" : <i>[ String, ... ]</i>,
         "<a href="#cfnparameters" title="CfnParameters">CfnParameters</a>" : <i>Map</i>,
         "<a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>" : <i>Map</i>,
-        "<a href="#tags" title="Tags">Tags</a>" : <i>[ <a href="tag.md">Tag</a>, ... ]</i>,
         "<a href="#loglevel" title="LogLevel">LogLevel</a>" : <i>Integer</i>
     }
 }
@@ -40,8 +39,6 @@ Properties:
       - String</i>
     <a href="#cfnparameters" title="CfnParameters">CfnParameters</a>: <i>Map</i>
     <a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>: <i>Map</i>
-    <a href="#tags" title="Tags">Tags</a>: <i>
-      - <a href="tag.md">Tag</a></i>
     <a href="#loglevel" title="LogLevel">LogLevel</a>: <i>Integer</i>
 </pre>
 
@@ -121,14 +118,6 @@ _Type_: Map
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
-#### Tags
-
-_Required_: No
-
-_Type_: List of <a href="tag.md">Tag</a>
-
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
-
 #### LogLevel
 
 Set the log level for execution. Can be one of Python's integer log values: https://docs.python.org/3/library/logging.html#logging-levels
@@ -160,4 +149,32 @@ Returns the <code>CfnStackOutput1</code> value.
 #### CfnStackOutput2
 
 Returns the <code>CfnStackOutput2</code> value.
+
+#### CfnStackOutput3
+
+Returns the <code>CfnStackOutput3</code> value.
+
+#### CfnStackOutput4
+
+Returns the <code>CfnStackOutput4</code> value.
+
+#### CfnStackOutput5
+
+Returns the <code>CfnStackOutput5</code> value.
+
+#### CfnStackOutput6
+
+Returns the <code>CfnStackOutput6</code> value.
+
+#### CfnStackOutput7
+
+Returns the <code>CfnStackOutput7</code> value.
+
+#### CfnStackOutput8
+
+Returns the <code>CfnStackOutput8</code> value.
+
+#### CfnStackOutput9
+
+Returns the <code>CfnStackOutput9</code> value.
 

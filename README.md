@@ -1,39 +1,244 @@
-# SPRT::CrossStack::Executor
 
-Congratulations on starting development! Next steps:
 
-1. Write the JSON schema describing your resource, `sprt-crossstack-executor.json`
-2. Implement your resource handlers in `sprt_crossstack_executor/handlers.py`
+# Introduction
 
-> Don't modify `models.py` by hand, any modifications will be overwritten when the `generate` or `package` commands are run.
+**SPRT::CrossStack::Executor** helps in deploying CrossAccount/CrossRegional CloudFormation stacks.
+In comparison to CloudFormation StackSets, it offers the following additional functionalities:
+* Retrieving CloudFormation Outputs inside the "master" CloudFormation.
+* Use these Outputs as input for other Resources and configure follow-up Resources accordingly.
+* Start installations of different CloudFormation stacks from one single "master" CloudFormation stack.
 
-Implement CloudFormation resource here. Each function must always return a ProgressEvent.
+* Architecture diagram
+* Real-world examples
 
-```python
-ProgressEvent(
-    # Required
-    # Must be one of OperationStatus.IN_PROGRESS, OperationStatus.FAILED, OperationStatus.SUCCESS
-    status=OperationStatus.IN_PROGRESS,
-    # Required on SUCCESS (except for LIST where resourceModels is required)
-    # The current resource model after the operation; instance of ResourceModel class
-    resourceModel=model,
-    resourceModels=None,
-    # Required on FAILED
-    # Customer-facing message, displayed in e.g. CloudFormation stack events
-    message="",
-    # Required on FAILED: a HandlerErrorCode
-    errorCode=HandlerErrorCode.InternalFailure,
-    # Optional
-    # Use to store any state between re-invocation via IN_PROGRESS
-    callbackContext={},
-    # Required on IN_PROGRESS
-    # The number of seconds to delay before re-invocation
-    callbackDelaySeconds=0,
-)
+
+# Usage
+
+## Syntax
+
+```yml
+Type: SPRT::CrossStack::Executor
+Properties:
+  AccountId: String
+  Region: String
+  AssumeRoleName: String
+  AssumeRolePath: String
+  CfnCapabilities:
+  - Array
+  CfnStackName: String
+  CfnParameters:
+    Object
+  CfnTemplate: String
+  LogLevel: Number
 ```
 
-Failures can be passed back to CloudFormation by either raising an exception from `cloudformation_cli_python_lib.exceptions`, or setting the ProgressEvent's `status` to `OperationStatus.FAILED` and `errorCode` to one of `cloudformation_cli_python_lib.HandlerErrorCode`. There is a static helper function, `ProgressEvent.failed`, for this common case.
+## Properties
 
-## What's with the type hints?
+AccountId
 
-We hope they'll be useful for getting started quicker with an IDE that support type hints. Type hints are optional - if your code doesn't use them, it will still work.
+> Defines the AWS Account ID where to deploy the defined CloudFormation template.
+>
+> _Required_: Yes
+> 
+> _Type_: String
+> 
+> _Pattern_: \d{12}
+> 
+> _Update allowed_: No
+
+
+AssumeRoleName
+
+> Role name to assume for CrossStack's installations in different AWS accounts. 
+>
+> _Required_: Yes
+>
+> _Type_: String
+> 
+> _Update allowed_: Yes
+
+
+
+AssumeRolePath
+
+> Role path to assume for CrossStack's installations in different AWS accounts. 
+>
+> _Required_: No
+>
+> _Default_: /
+>
+> _Type_: String
+> 
+> _Update allowed_: Yes
+
+
+
+CfnCapabilities:
+
+> Capabilities for Stack to create/update.
+>
+> _Required_: No
+>
+> _Default_: []
+>
+> _Type_: List
+> 
+> _Possible values_: [All known CloudFormation capabilities](https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateStack.html) (CAPABILITY_IAM, CAPABILITY_NAMED_IAM, CAPABILITY_AUTO_EXPAND)
+>
+> _Update allowed_: No
+
+
+
+CfnParameters
+
+> Parameters for CloudFormation stack.
+>
+> _Required_: No
+>
+> _Default_: {}
+>
+> _Type_: Object
+> 
+> _Update allowed_: Yes
+
+
+
+CfnStackName
+
+> CloudFormation Stack name for CrossStack's installation.
+>
+> _Required_: Yes
+>
+> _Type_: String
+> 
+> _Update allowed_: No
+
+
+
+CfnTemplate
+
+> CloudFormation Stack template for CrossStack's installation.
+>
+> _Required_: Yes
+>
+> _Type_: String
+> 
+> _Update allowed_: Yes
+
+
+
+LogLevel
+
+> Internal logging level for CrossStack's CloudWatch logs. Mostly used for debugging purposes.
+>
+> _Required_: No
+>
+> _Default_: 30
+>
+> _Type_: Number
+> 
+> _Allowed values_: One of [Python's defined Logging Levels](https://docs.python.org/3/library/logging.html#logging-levels).
+>
+> _Update allowed_: Yes
+
+
+Region
+
+> Defines the AWS Region where to deploy the defined CloudFormation template.
+>
+> _Required_: Yes
+> 
+> _Type_: String
+>
+> _Possible values_: One of [AWS service endpoints](https://docs.aws.amazon.com/general/latest/gr/rande.html)
+>
+> _Update allowed_: No
+
+
+
+## Return values
+
+**Ref**
+
+> _Nothing_
+
+
+**Fn::GetAtt**
+
+CfnStackId
+
+> Internal ID of CrossStackResource.
+>
+> _Example_: teststack-123456789012-eu-central-1
+
+
+CfnStackOutput1, ..., CfnStackOutput9
+
+> Up to 9 variables can be retrieved from CrossStack installations. 
+>
+> Example: SomeVariableValueFromCrossStackExecution
+
+
+# Examples
+
+**Create an S3 bucket**
+
+The following example creates and S3 bucket on another AWS account and region.
+The output variables are catched inside the execution stack and can be used for additional purposes.
+
+```yml
+Resources:
+  TestResource:
+    Type: SPRT::CrossStack::Executor
+    Properties:
+      AccountId: 123456789012
+      Region: eu-central-1
+      AssumeRoleName: sprt-crossstack-role
+      LogLevel: 10
+      CfnCapabilities:
+      - CAPABILITY_NAMED_IAM
+      CfnStackName: my-first-test-stack
+      CfnParameters:
+        CreatedByTag: CrossStackExecutor
+      CfnTemplate: |
+        AWSTemplateFormatVersion: 2010-09-09
+        Parameters:
+          CreatedByTag:
+            Type: String
+        Resources:
+          S3Resource:
+            Type: AWS::S3::Bucket
+            Properties:
+              BucketName: !Sub "some-bucket-name-${AWS::AccountId}-${AWS::Region}"
+              Tags:
+              - Key: CreatedBy
+                Value: !Ref CreatedByTag
+        Outputs:
+          S3BucketArn:
+            Value: !GetAtt S3Resource.Arn
+
+Outputs:
+  ExampleOutput:
+    Description: Example output for S3 Bucket ARN from child execution
+    Value: !GetAtt TestResource.CfnStackOutput1
+
+```
+
+
+
+
+
+
+
+
+# Development
+
+* Developed with -C CFN init python...
+* Locations: samples -> here, ...
+* Deployment steps
+
+
+# Q&A
+
+_Q: Why is there only nine predefined Output variables from CrossStack's execution?_  
+A: CloudFormation resource provider doesn't allow for dynamic output variables so far. Therefore these predefined set of variables acts as a workaround.

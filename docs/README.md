@@ -18,6 +18,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#assumerolename" title="AssumeRoleName">AssumeRoleName</a>" : <i>String</i>,
         "<a href="#cfnstackname" title="CfnStackName">CfnStackName</a>" : <i>String</i>,
         "<a href="#cfncapabilities" title="CfnCapabilities">CfnCapabilities</a>" : <i>[ String, ... ]</i>,
+        "<a href="#cfnparameters" title="CfnParameters">CfnParameters</a>" : <i>Map</i>,
         "<a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>" : <i>Map</i>,
         "<a href="#tags" title="Tags">Tags</a>" : <i>[ <a href="tag.md">Tag</a>, ... ]</i>,
         "<a href="#loglevel" title="LogLevel">LogLevel</a>" : <i>Integer</i>
@@ -37,6 +38,7 @@ Properties:
     <a href="#cfnstackname" title="CfnStackName">CfnStackName</a>: <i>String</i>
     <a href="#cfncapabilities" title="CfnCapabilities">CfnCapabilities</a>: <i>
       - String</i>
+    <a href="#cfnparameters" title="CfnParameters">CfnParameters</a>: <i>Map</i>
     <a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>: <i>Map</i>
     <a href="#tags" title="Tags">Tags</a>: <i>
       - <a href="tag.md">Tag</a></i>
@@ -100,6 +102,14 @@ _Required_: No
 _Type_: List of String
 
 _Allowed Values_: <code>CAPABILITY_IAM</code> | <code>CAPABILITY_NAMED_IAM</code> | <code>CAPABILITY_AUTO_EXPAND</code>
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### CfnParameters
+
+_Required_: No
+
+_Type_: Map
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 

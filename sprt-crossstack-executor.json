@@ -37,6 +37,9 @@
     "CfnStackOutput2": {
       "type": "string"
     },
+    "CfnParameters": {
+      "type": "object"
+    },
     "CfnTemplate": {
       "type": "object"
     },

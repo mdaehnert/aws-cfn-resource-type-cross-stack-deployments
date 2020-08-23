@@ -42,21 +42,20 @@ def _update_stack(cfn_client, model: ResourceModel):
     capabilities = [] if model.CfnCapabilities is None else model.CfnCapabilities
     tags = [] if model.Tags is None else model.Tags
 
-    cfn_client.create_stack(
+    cfn_input_parameters = [] if model.CfnParameters is None else model.CfnParameters
+    final_parameters = []
+    for key, value in model.CfnParameters.items():
+        final_parameters.append({
+            "ParameterKey": key,
+            "ParameterValue": value
+        })
+
+    cfn_client.update_stack(
         StackName=model.CfnStackName,
         TemplateBody=model.CfnTemplate,
-        # Parameters=[
-        #     {
-        #         'ParameterKey': 'string',
-        #         'ParameterValue': 'string',
-        #         'UsePreviousValue': True|False,
-        #         'ResolvedValue': 'string'
-        #     },
-        # ],
+        Parameters=final_parameters,
         Capabilities=capabilities,
-        # RoleARN='string',
-        Tags=tags,
-        # EnableTerminationProtection=True|False
+        Tags=tags
     )
     
     

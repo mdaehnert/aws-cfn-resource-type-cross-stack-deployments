@@ -19,8 +19,14 @@ Resources:
       - Key: SecondTag
         Value: SecondValue
       CfnStackName: my-first-test-stack
+      CfnParameters:
+        CreatedByTag: CrossStackExecutor
       CfnTemplate: |
         AWSTemplateFormatVersion: 2010-09-09
+        Parameters:
+          CreatedByTag:
+            Type: String
+            
         Resources:
           SomeResource:
             Type: AWS::S3::Bucket
@@ -29,6 +35,9 @@ Resources:
               Tags:
               - Key: somekey
                 Value: somevalue
+              - Key: CreatedBy
+                Value: !Ref CreatedByTag
+
         Outputs:
           S3BucketArn:
             Value: !GetAtt SomeResource.Arn

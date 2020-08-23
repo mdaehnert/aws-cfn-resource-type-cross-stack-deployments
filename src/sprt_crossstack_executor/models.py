@@ -47,6 +47,7 @@ class ResourceModel(BaseModel):
     CfnCapabilities: Optional[Sequence[str]]
     CfnStackOutput1: Optional[str]
     CfnStackOutput2: Optional[str]
+    CfnParameters: Optional[MutableMapping[str, Any]]
     CfnTemplate: Optional[MutableMapping[str, Any]]
     CfnStackId: Optional[str]
     Tags: Optional[Sequence["_Tag"]]
@@ -70,6 +71,7 @@ class ResourceModel(BaseModel):
             CfnCapabilities=json_data.get("CfnCapabilities"),
             CfnStackOutput1=json_data.get("CfnStackOutput1"),
             CfnStackOutput2=json_data.get("CfnStackOutput2"),
+            CfnParameters=json_data.get("CfnParameters"),
             CfnTemplate=json_data.get("CfnTemplate"),
             CfnStackId=json_data.get("CfnStackId"),
             Tags=deserialize_list(json_data.get("Tag"), Tag),

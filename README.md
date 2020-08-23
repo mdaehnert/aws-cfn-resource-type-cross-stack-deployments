@@ -265,4 +265,4 @@ A: Unfortunately the Python contract tests aren't running as of now (@see github
 Therefore tests were done with the provided example deployment _samples/s3-examples.yml_.
 
 _Q: What does the name SPRT stand for?_  
-A: That's an easy one: _S_uper _P_eculiar _R_esource _T_ype.
+A: That's an easy one: *S*uper *P*eculiar *R*esource *T*ype.

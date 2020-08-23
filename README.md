@@ -9,7 +9,7 @@ In comparison to CloudFormation StackSets, it offers the following additional fu
 * Use these Outputs as input for other Resources and configure follow-up Resources accordingly.
 * Start installations of different CloudFormation stacks from one single "master" CloudFormation stack.
 
-![/_images/architecture.drawio.png](CrossStack Architecture)
+![CrossStack Architecture](_images/architecture.drawio.png)
 
 Some real world examples include:
 * Creation of VPC inside AWS accounts and attaching them to a centralized AWS Transit Gateway.
@@ -22,7 +22,7 @@ Some real world examples include:
 
 ## Requirements
 
-CrossStack is always assuming another role. An example role to deploy inside accounts inside _samples/cross-account-access-role.yml_
+CrossStack is always assuming another role. Please find a quickstart role to deploy inside _samples/cross-account-access-role.yml_
 
 
 ## Syntax
@@ -233,11 +233,11 @@ Outputs:
 
 ## Setup environment
 
-Pre-requisites:
-* Development was done via Cloud9 environment on Amazon Linux system
-* Initial setup included the steps on [github's cloudformation-cli README](https://github.com/aws-cloudformation/cloudformation-cli)
+**Pre-requisites:**
+* Development was done via Cloud9 environment on an Amazon Linux system
+* Initial setup followed the steps from [github's cloudformation-cli README](https://github.com/aws-cloudformation/cloudformation-cli)
 
-Full update and deployment of test resource:
+**Full Resource Provider update and deployment of s3-example:**
 ```sh
 $ cfn generate
 $ cfn validate
@@ -247,18 +247,20 @@ $ aws cloudformation deploy --template-file samples/s3-example.yml --stack-name 
 
 ## Debugging and feature enhancement
 
-* First of all: Take care to set _LogLevel: 10_, as it adds helpful information about processed handlers and parameters.
-* Resource handlers are separated into different files for better readability. They can be found inside src/sprt_crossstack_executor/sub_handlers/*
+* First of all: Take care to set Parameter _LogLevel: 10_, as it adds helpful information about processed handlers and parameters.
+* Resource handlers are separated into different files for better readability. They can be found inside *src/sprt_crossstack_executor/sub_handlers/**
 
 
 
 # Q&A
 
+_Q: Are all CloudFormation Create/Update Stack parameters supported?_  
+A: Only a subset is implemented right now. Nevertheless, it's easy to add additional ones inside the handler functionalities.
+
 _Q: Why are there only nine predefined Output variables from CrossStack's execution?_  
 A: CloudFormation resource provider doesn't allow for dynamic output variables so far. Therefore these predefined set of variables acts as a workaround.
 
-_Q: Are all CloudFormation Create/Update Stack parameters supported?_  
-A: Only a subset is implemented right now. Nevertheless, it's easy to add additional ones inside the handler functionalities.
+
 
 _Q: What does the name SPRT stand for?_  
 A: That's an easy one: _S_uper _P_eculiar _R_esource _T_ype.

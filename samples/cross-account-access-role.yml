@@ -41,5 +41,5 @@ Resources:
           - Effect: Allow
             Resource: "*"
             Action:
-            - cloudformation:*
             # Your additional rights
+            - s3:*

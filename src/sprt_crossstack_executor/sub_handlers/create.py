@@ -41,7 +41,7 @@ def handle(
 def _create_stack(cfn_client, model: ResourceModel):
     capabilities = [] if model.CfnCapabilities is None else model.CfnCapabilities
 
-    cfn_input_parameters = [] if model.CfnParameters is None else model.CfnParameters
+    cfn_input_parameters = {} if model.CfnParameters is None else model.CfnParameters
     final_parameters = []
     for key, value in cfn_input_parameters.items():
         final_parameters.append({

@@ -10,7 +10,7 @@
     },
     "Region": {
       "type": "string",
-      "pattern": "^[a-z]+-[a-z]-[0-9]+$"
+      "pattern": "^[a-z]+-[a-z]+-[0-9]+$"
     },
     "AssumeRolePath": {
       "type": "string",
@@ -25,17 +25,17 @@
     "CfnCapabilities": {
       "type": "array",
       "description": "Set the capability permissions for execution. Can be left out or contains one or more of the following Capabilities: https://docs.aws.amazon.com/AWSCloudFormation/latest/APIReference/API_CreateStack.html#API_CreateStack_RequestParameters",
-      "enum": ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM", "CAPABILITY_AUTO_EXPAND"],
-      "uniqueItems": true,
       "items": {
-        "type": "string"
+        "enum": ["CAPABILITY_IAM", "CAPABILITY_NAMED_IAM", "CAPABILITY_AUTO_EXPAND"],
+        "type": "string",
+        "uniqueItems": true
       }
     },
     "CfnParameters": {
       "type": "object"
     },
     "CfnTemplate": {
-      "type": "object"
+      "type": "string"
     },
     "CfnStackId": {
       "type": "string"
@@ -70,8 +70,8 @@
     "LogLevel": {
       "type": "integer",
       "description": "Set the log level for execution. Can be one of Python's integer log values: https://docs.python.org/3/library/logging.html#logging-levels",
-      "enum": ["0", "10", "20", "30", "40", "50"],
-      "default": "30"
+      "enum": [0, 10, 20, 30, 40, 50],
+      "default": 30
     }
   },
   "handlers": {
@@ -110,7 +110,10 @@
   "createOnlyProperties": [
     "/properties/AccountId",
     "/properties/Region",
-    "/properties/CfnStackName"
+    "/properties/CfnStackName",
+    "/properties/AssumeRolePath",
+    "/properties/AssumeRoleName",
+    "/properties/LogLevel"
   ],
   "readOnlyProperties": [
     "/properties/CfnStackId",

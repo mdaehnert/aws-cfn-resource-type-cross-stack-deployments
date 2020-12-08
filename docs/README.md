@@ -19,7 +19,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#cfnstackname" title="CfnStackName">CfnStackName</a>" : <i>String</i>,
         "<a href="#cfncapabilities" title="CfnCapabilities">CfnCapabilities</a>" : <i>[ String, ... ]</i>,
         "<a href="#cfnparameters" title="CfnParameters">CfnParameters</a>" : <i>Map</i>,
-        "<a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>" : <i>Map</i>,
+        "<a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>" : <i>String</i>,
         "<a href="#loglevel" title="LogLevel">LogLevel</a>" : <i>Integer</i>
     }
 }
@@ -38,7 +38,7 @@ Properties:
     <a href="#cfncapabilities" title="CfnCapabilities">CfnCapabilities</a>: <i>
       - String</i>
     <a href="#cfnparameters" title="CfnParameters">CfnParameters</a>: <i>Map</i>
-    <a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>: <i>Map</i>
+    <a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>: <i>String</i>
     <a href="#loglevel" title="LogLevel">LogLevel</a>: <i>Integer</i>
 </pre>
 
@@ -60,7 +60,7 @@ _Required_: Yes
 
 _Type_: String
 
-_Pattern_: <code>^[a-z]+-[a-z]-[0-9]+$</code>
+_Pattern_: <code>^[a-z]+-[a-z]+-[0-9]+$</code>
 
 _Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
 
@@ -72,7 +72,7 @@ _Type_: String
 
 _Pattern_: <code>^/.*/$</code>
 
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
 
 #### AssumeRoleName
 
@@ -80,7 +80,7 @@ _Required_: Yes
 
 _Type_: String
 
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
 
 #### CfnStackName
 
@@ -98,8 +98,6 @@ _Required_: No
 
 _Type_: List of String
 
-_Allowed Values_: <code>CAPABILITY_IAM</code> | <code>CAPABILITY_NAMED_IAM</code> | <code>CAPABILITY_AUTO_EXPAND</code>
-
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### CfnParameters
@@ -114,7 +112,7 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 _Required_: Yes
 
-_Type_: Map
+_Type_: String
 
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
@@ -128,7 +126,7 @@ _Type_: Integer
 
 _Allowed Values_: <code>0</code> | <code>10</code> | <code>20</code> | <code>30</code> | <code>40</code> | <code>50</code>
 
-_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+_Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-replacement)
 
 ## Return Values
 

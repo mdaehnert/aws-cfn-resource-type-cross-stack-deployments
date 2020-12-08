@@ -46,7 +46,7 @@ class ResourceModel(BaseModel):
     CfnStackName: Optional[str]
     CfnCapabilities: Optional[Sequence[str]]
     CfnParameters: Optional[MutableMapping[str, Any]]
-    CfnTemplate: Optional[MutableMapping[str, Any]]
+    CfnTemplate: Optional[str]
     CfnStackId: Optional[str]
     CfnStackOutput1: Optional[str]
     CfnStackOutput2: Optional[str]

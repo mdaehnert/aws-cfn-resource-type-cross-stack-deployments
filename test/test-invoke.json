@@ -1,17 +1,13 @@
 {
+  "clientRequestToken": "ecba020e-b2e6-4742-a7d0-8a06ae7c4b2b",
   "desiredResourceState": {
-    "AccountId": "123456789012",
-    "Region": "eu-central-1",
-    "CfnTemplate": {
-      "AWSTemplateFormatVersion": "2010-09-09",
-      "Resources": {
-        "SomeResource": {
-          "Type": "AWS::S3::Bucket",
-          "Properties": {
-            "BucketName": "!Sub Some-bucket-name-${!AWS::AccountId}-${!AWS::Region}"
-          }
-        }
-      }
-    }
-  }
+    "AccountId": "123456789123",
+    "Region": "eu-west-1",
+    "AssumeRoleName": "x-account-role",
+    "CfnStackName": "testStack",
+    "LogLevel": 10,
+    "CfnTemplate": "{\"AWSTemplateFormatVersion\":\"2010-09-09\",\"Resources\":{\"SomeResource\":{\"Type\":\"AWS::SSM::Parameter\",\"Properties\":{\"Value\":\"DUMMY\",\"Type\":\"String\",\"Name\":\"/my/stack/test\"}}}}"
+  },
+  "previousResourceState": null,
+  "logicalResourceIdentifier": null
 }

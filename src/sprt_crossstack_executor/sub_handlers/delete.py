@@ -54,10 +54,6 @@ def _delete_stack(cfn_client, model: ResourceModel):
         StackName=model.CfnStackName
     )
 
-    # waiter = cfn_client.get_waiter("stack_delete_complete")
-    #
-    # waiter.wait(StackName=model.CfnStackName)
-
 
 def _is_delete_complete(cfn_client, callback_context: MutableMapping[str, Any]):
     describe_response = cfn_client.describe_stacks(

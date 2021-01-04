@@ -1,6 +1,7 @@
 import logging
 from typing import Any, MutableMapping
 
+import botocore
 from cloudformation_cli_python_lib import (
     ProgressEvent,
     SessionProxy,
@@ -33,6 +34,7 @@ def handle(
         callback_context["UPDATE_STARTED"] = True
 
     if _is_update_complete(cfn_client, model):
+        _set_output_values(cfn_client, model)
         progress.status = OperationStatus.SUCCESS
 
     LOG.info("Exiting update.handle() method.")
@@ -48,13 +50,23 @@ def _update_stack(cfn_client, model: ResourceModel):
             "ParameterKey": key,
             "ParameterValue": value
         })
+    try:
+        request = {
+            'StackName': model.CfnStackName,
+            'Parameters': final_parameters,
+            'Capabilities': capabilities
+        }
+        if model.CfnTemplateUrl is not None:
+            request['TemplateURL'] = model.CfnTemplateUrl
+        else:
+            request['TemplateBody'] = model.CfnTemplate
 
-    cfn_client.update_stack(
-        StackName=model.CfnStackName,
-        TemplateBody=model.CfnTemplate,
-        Parameters=final_parameters,
-        Capabilities=capabilities
-    )
+        cfn_client.update_stack(**request)
+    except botocore.exceptions.ClientError as e:
+        if "No updates are to be performed" in e.response['Error']['Message']:
+            LOG.info("No updates, skipping")
+        else:
+            raise e
 
 
 def _is_update_complete(cfn_client, model: ResourceModel):
@@ -65,7 +77,20 @@ def _is_update_complete(cfn_client, model: ResourceModel):
     stack_status = describe_response["Stacks"][0]["StackStatus"]
     if stack_status.endswith("_FAILED"):
         raise Exception("StackStatus={}, StackStatusReason={}".format(stack_status, describe_response["Stacks"][0]("StackStatusReason")))
-    elif stack_status == "UPDATE_COMPLETE":
+    elif stack_status in ["UPDATE_COMPLETE", "CREATE_COMPLETE"]:
         return True
     else:
         return False
+
+
+def _set_output_values(cfn_client, model: ResourceModel):
+    describe_response = cfn_client.describe_stacks(
+        StackName=model.CfnStackName
+    )
+    outputs = [] if 'Outputs' not in describe_response["Stacks"][0] else describe_response["Stacks"][0]["Outputs"]
+
+    index = 1
+    for output in outputs:
+        LOG.info(output)
+        setattr(model, f"CfnStackOutput{index}", output["OutputValue"])
+        index += 1

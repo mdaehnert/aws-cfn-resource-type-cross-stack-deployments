@@ -35,7 +35,7 @@ def _set_output_values(cfn_client, model: ResourceModel):
         StackName=model.CfnStackName
     )
 
-    outputs = describe_response["Stacks"][0]["Outputs"]
+    outputs = [] if 'Outputs' not in describe_response["Stacks"][0] else describe_response["Stacks"][0]["Outputs"]
 
     index = 1
     for output in outputs:

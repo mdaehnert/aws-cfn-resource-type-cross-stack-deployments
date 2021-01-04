@@ -37,6 +37,9 @@
     "CfnTemplate": {
       "type": "string"
     },
+    "CfnTemplateUrl": {
+      "type": "string"
+    },
     "CfnStackId": {
       "type": "string"
     },
@@ -104,7 +107,6 @@
     "AccountId",
     "Region",
     "AssumeRoleName",
-    "CfnTemplate",
     "CfnStackName"
   ],
   "createOnlyProperties": [

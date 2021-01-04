@@ -20,6 +20,7 @@ To declare this entity in your AWS CloudFormation template, use the following sy
         "<a href="#cfncapabilities" title="CfnCapabilities">CfnCapabilities</a>" : <i>[ String, ... ]</i>,
         "<a href="#cfnparameters" title="CfnParameters">CfnParameters</a>" : <i>Map</i>,
         "<a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>" : <i>String</i>,
+        "<a href="#cfntemplateurl" title="CfnTemplateUrl">CfnTemplateUrl</a>" : <i>String</i>,
         "<a href="#loglevel" title="LogLevel">LogLevel</a>" : <i>Integer</i>
     }
 }
@@ -39,6 +40,7 @@ Properties:
       - String</i>
     <a href="#cfnparameters" title="CfnParameters">CfnParameters</a>: <i>Map</i>
     <a href="#cfntemplate" title="CfnTemplate">CfnTemplate</a>: <i>String</i>
+    <a href="#cfntemplateurl" title="CfnTemplateUrl">CfnTemplateUrl</a>: <i>String</i>
     <a href="#loglevel" title="LogLevel">LogLevel</a>: <i>Integer</i>
 </pre>
 
@@ -110,7 +112,15 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### CfnTemplate
 
-_Required_: Yes
+_Required_: No
+
+_Type_: String
+
+_Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
+
+#### CfnTemplateUrl
+
+_Required_: No
 
 _Type_: String
 

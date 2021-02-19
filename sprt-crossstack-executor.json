@@ -79,16 +79,19 @@
   },
   "handlers": {
     "create": {
-      "permissions": ["sts:AssumeRole"]
+      "permissions": ["sts:AssumeRole"],
+      "timeoutInMinutes": 300
     },
     "read": {
       "permissions": ["sts:AssumeRole"]
     },
     "update": {
-      "permissions": ["sts:AssumeRole"]
+      "permissions": ["sts:AssumeRole"],
+      "timeoutInMinutes": 300
     },
     "delete": {
-      "permissions": ["sts:AssumeRole"]
+      "permissions": ["sts:AssumeRole"],
+      "timeoutInMinutes": 300
     },
     "list": {
       "permissions": ["sts:AssumeRole"]

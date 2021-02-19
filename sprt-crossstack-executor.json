@@ -106,11 +106,25 @@
     "/properties/CfnStackId",
     "/properties/LogLevel"
   ],
-  "required": [
-    "AccountId",
-    "Region",
-    "AssumeRoleName",
-    "CfnStackName"
+  "oneOf": [
+    {
+      "required": [
+        "AccountId",
+        "Region",
+        "AssumeRoleName",
+        "CfnStackName",
+        "CfnTemplate"
+      ]
+    },
+    {
+      "required": [
+        "AccountId",
+        "Region",
+        "AssumeRoleName",
+        "CfnStackName",
+        "CfnTemplateUrl"
+      ]
+    }
   ],
   "createOnlyProperties": [
     "/properties/AccountId",

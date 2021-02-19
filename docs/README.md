@@ -48,7 +48,7 @@ Properties:
 
 #### AccountId
 
-_Required_: Yes
+_Required_: No
 
 _Type_: String
 
@@ -58,7 +58,7 @@ _Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/l
 
 #### Region
 
-_Required_: Yes
+_Required_: No
 
 _Type_: String
 
@@ -78,7 +78,7 @@ _Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/l
 
 #### AssumeRoleName
 
-_Required_: Yes
+_Required_: No
 
 _Type_: String
 
@@ -86,7 +86,7 @@ _Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/l
 
 #### CfnStackName
 
-_Required_: Yes
+_Required_: No
 
 _Type_: String
 

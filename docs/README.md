@@ -48,7 +48,7 @@ Properties:
 
 #### AccountId
 
-_Required_: No
+_Required_: Yes
 
 _Type_: String
 
@@ -58,7 +58,7 @@ _Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/l
 
 #### Region
 
-_Required_: No
+_Required_: Yes
 
 _Type_: String
 
@@ -78,7 +78,7 @@ _Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/l
 
 #### AssumeRoleName
 
-_Required_: No
+_Required_: Yes
 
 _Type_: String
 
@@ -86,7 +86,7 @@ _Update requires_: [Replacement](https://docs.aws.amazon.com/AWSCloudFormation/l
 
 #### CfnStackName
 
-_Required_: No
+_Required_: Yes
 
 _Type_: String
 
@@ -112,6 +112,8 @@ _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormati
 
 #### CfnTemplate
 
+You must include either CfnTemplateUrl or CfnTemplateBody in a Stack, but you cannot use both.
+
 _Required_: No
 
 _Type_: String
@@ -119,6 +121,8 @@ _Type_: String
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### CfnTemplateUrl
+
+You must include either CfnTemplateUrl or CfnTemplateBody in a Stack, but you cannot use both.
 
 _Required_: No
 

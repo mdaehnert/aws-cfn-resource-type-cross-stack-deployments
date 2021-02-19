@@ -75,6 +75,7 @@ def _create_stack(cfn_client, model: ResourceModel):
     else:
         request['TemplateBody'] = model.CfnTemplate
 
+    # For importing existing stacks into this resources a create request performs an update as well
     if not stack_exists:
         cfn_client.create_stack(**request)
     else:

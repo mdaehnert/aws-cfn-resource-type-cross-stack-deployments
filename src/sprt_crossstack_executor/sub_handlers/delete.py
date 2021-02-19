@@ -62,7 +62,7 @@ def _is_delete_complete(cfn_client, callback_context: MutableMapping[str, Any]):
 
     stack_status = describe_response["Stacks"][0]["StackStatus"]
     if stack_status.endswith("_FAILED"):
-        raise Exception("StackStatus={}, StackStatusReason={}".format(stack_status, describe_response["Stacks"][0]("StackStatusReason")))
+        raise Exception("StackStatus={}, StackStatusReason={}".format(stack_status, describe_response["Stacks"][0]["StackStatusReason"]))
     elif stack_status == "DELETE_COMPLETE":
         return True
     else:

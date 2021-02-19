@@ -76,8 +76,8 @@ def _is_update_complete(cfn_client, model: ResourceModel):
 
     stack_status = describe_response["Stacks"][0]["StackStatus"]
     if stack_status.endswith("_FAILED") or stack_status.endswith("ROLLBACK_COMPLETE"):
-        raise Exception("StackStatus={}, StackStatusReason={}".format(stack_status, describe_response["Stacks"][0]("StackStatusReason")))
-    elif stack_status in ["UPDATE_COMPLETE", "CREATE_COMPLETE"]:
+        raise Exception("StackStatus={}, StackStatusReason={}".format(stack_status, describe_response["Stacks"][0]["StackStatusReason"]))
+    elif stack_status in ["UPDATE_COMPLETE", "CREATE_COMPLETE", "IMPORT_COMPLETE"]:
         return True
     else:
         return False

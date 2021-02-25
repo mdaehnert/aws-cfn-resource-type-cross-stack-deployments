@@ -100,6 +100,8 @@ _Required_: No
 
 _Type_: List of String
 
+_Allowed Values_: [<code>CAPABILITY_IAM</code>, <code>CAPABILITY_NAMED_IAM</code>, <code>CAPABILITY_AUTO_EXPAND</code>]
+
 _Update requires_: [No interruption](https://docs.aws.amazon.com/AWSCloudFormation/latest/UserGuide/using-cfn-updating-stacks-update-behaviors.html#update-no-interrupt)
 
 #### CfnParameters

@@ -10,7 +10,7 @@ In comparison to CloudFormation StackSets, it offers the following additional fu
 * Start installations of different CloudFormation stacks from one single "master" CloudFormation stack.
 
 In comparison to CloudFormation nested Stacks, it offers the following additional functionalities:
-* Cross-Region
+* The solution works Cross-Region and
 * Cross-Account
 
 ![CrossStack Architecture](_images/architecture.drawio.png)
@@ -40,7 +40,7 @@ Properties:
   CfnCapabilities:
   - Array
   CfnParameters:
-    StackParameter
+    StackParameters
   CfnStackName: String
   CfnTemplate: String
   CfnTemplateUrl: String
@@ -48,7 +48,7 @@ Properties:
   Region: String
 ```
 
-StackParameter Object
+StackParameters Object
 ```yml
 ParameterKey1: ParamterValue1
 ...

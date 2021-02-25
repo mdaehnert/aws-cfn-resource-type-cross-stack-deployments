@@ -1,0 +1,36 @@
+AWSTemplateFormatVersion: "2010-09-09"
+
+# aws cloudformation deploy --template-file samples/ssm-example.yml --stack-name test
+
+Resources:
+  TestResource:
+    Type: SPRT::CrossStack::Executor
+    Properties:
+      AccountId: 123456789123
+      Region: eu-west-1
+      LogLevel: 10
+      CfnCapabilities:
+      - CAPABILITY_NAMED_IAM
+      AssumeRoleName: x-account-role
+      CfnStackName: my-first-test-stack
+      CfnParameters:
+        TestInput: myTestStack
+      CfnTemplate: |
+        AWSTemplateFormatVersion: "2010-09-09"
+        Parameters:
+          TestInput:
+            Type: String
+        Resources:
+          SomeResource:
+            Type: AWS::SSM::Parameter
+            Properties:
+              Name: !Sub /my/stack/${TestInput}
+              Type: String
+              Value: DUMMY
+        Outputs:
+          TestOutput:
+            Value: !Ref SomeResource
+
+Outputs:
+  TestOut:
+    Value: !GetAtt TestResource.CfnStackOutput1

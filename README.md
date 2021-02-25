@@ -9,6 +9,10 @@ In comparison to CloudFormation StackSets, it offers the following additional fu
 * Use these Outputs as input for other Resources and configure follow-up Resources accordingly.
 * Start installations of different CloudFormation stacks from one single "master" CloudFormation stack.
 
+In comparison to CloudFormation nested Stacks, it offers the following additional functionalities:
+* The solution works Cross-Region and
+* Cross-Account
+
 ![CrossStack Architecture](_images/architecture.drawio.png)
 
 Some real world examples include:
@@ -36,11 +40,19 @@ Properties:
   CfnCapabilities:
   - Array
   CfnParameters:
-    Object
+    StackParameters
   CfnStackName: String
   CfnTemplate: String
+  CfnTemplateUrl: String
   LogLevel: Number
   Region: String
+```
+
+StackParameters Object
+```yml
+ParameterKey1: ParamterValue1
+...
+ParameterKeyN: ParameterValueN
 ```
 
 ## Properties
@@ -124,8 +136,20 @@ CfnStackName
 CfnTemplate
 
 > CloudFormation Stack template for CrossStack's installation.
+> You must include either CfnTemplateUrl or CfnTemplateBody in a Stack, but you cannot use both.
 >
-> _Required_: Yes
+> _Required_: No
+>
+> _Type_: String
+> 
+> _Update allowed_: Yes
+
+CfnTemplateUrl
+
+> CloudFormation Stack template S3 url for CrossStack's installation.
+> You must include either CfnTemplateUrl or CfnTemplateBody in a Stack, but you cannot use both.
+>
+> _Required_: No
 >
 > _Type_: String
 > 

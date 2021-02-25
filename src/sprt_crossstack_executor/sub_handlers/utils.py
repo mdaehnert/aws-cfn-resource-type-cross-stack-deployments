@@ -24,9 +24,9 @@ def _get_cross_session(session: SessionProxy, model: ResourceModel, session_name
     :return: Can be used to obtain session.client() or session.resource()
     """
     LOG.setLevel(model.LogLevel)
-    
+
     role_arn = "arn:aws:iam::{}:role{}{}".format(model.AccountId, model.AssumeRolePath, model.AssumeRoleName)
-    
+
     LOG.debug("Assuming Cross session role: %s", role_arn)
     assumed_role = session.client("sts").assume_role(
         RoleArn=role_arn,
@@ -38,6 +38,5 @@ def _get_cross_session(session: SessionProxy, model: ResourceModel, session_name
         aws_secret_access_key=assumed_role["Credentials"]["SecretAccessKey"],
         aws_session_token=assumed_role["Credentials"]["SessionToken"]
     )
-
 
     return session

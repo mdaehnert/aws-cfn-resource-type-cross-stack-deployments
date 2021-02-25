@@ -40,7 +40,7 @@ Properties:
   CfnCapabilities:
   - Array
   CfnParameters:
-    Parameter
+    StackParameter
   CfnStackName: String
   CfnTemplate: String
   CfnTemplateUrl: String
@@ -48,9 +48,11 @@ Properties:
   Region: String
 ```
 
-Parameter Object
+StackParameter Object
 ```yml
-ParameterKey: ParamterValue
+ParameterKey1: ParamterValue1
+...
+ParameterKeyN: ParameterValueN
 ```
 
 ## Properties
